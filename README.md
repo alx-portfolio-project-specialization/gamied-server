@@ -1,6 +1,6 @@
 # Requirements?
  - python 3.10.6
- - See requirements file for the rest
+ - See requirements.txt file for the rest
 
 # How to run?
  - Connect to your postgres db and create a database named gamied
