@@ -7,7 +7,7 @@ from courses.models import Lesson
 
 class Assessment(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
-    lesson = models.ForeignKey(Lesson, on_delete=models.SET_NULL, null=True, blank=True)
+    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True, blank=True)
 
     def clean(self):
         if not self.lesson and not self.title:
@@ -15,7 +15,7 @@ class Assessment(models.Model):
 
 
 class Question(models.Model):
-    assessment = models.ForeignKey(Assessment, on_delete=models.SET_NULL, null=False, blank=False, related_name='questions')
+    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, null=False, blank=False, related_name='questions')
     name = models.CharField(max_length=255, null=False, blank=False)
 
     def __str__(self):
@@ -30,7 +30,7 @@ class Answer(models.Model):
         # Ensure that only one answer can be marked as correct for a question
         unique_together = ('question', 'is_correct')
 
-    question = models.ForeignKey(Question, on_delete=models.SET_NULL, null=False, blank=False, related_name='answers')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False, blank=False, related_name='answers')
     name = models.CharField(max_length=255, null=False, blank=False)
     is_correct = models.BooleanField(default=False)
 
@@ -49,8 +49,8 @@ class Penalty(models.Model):
     class Meta:
         unique_together = ('user', 'question')
 
-    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=False, blank=False, related_name='penalties')
-    question = models.ForeignKey(Question, on_delete=models.SET_NULL, null=False, blank=False, related_name='penalties')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False, blank=False, related_name='penalties')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False, blank=False, related_name='penalties')
     points = models.IntegerField(default=0)
 
     def __str__(self):
