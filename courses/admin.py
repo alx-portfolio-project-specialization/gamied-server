@@ -40,10 +40,11 @@ class LessonAdmin(admin.ModelAdmin):
     inlines = [ContentLinkInline]
     readonly_fields = ['completed_by']
     list_display = ['title', 'course']
+    list_filter = ['course']
 
 
 @admin.register(ContentLink)
 class ContentLinkAdmin(admin.ModelAdmin):
     fields = ['lesson', 'title', 'href']
     list_display = ['title', 'href']
-
+    list_filter = ['lesson']
