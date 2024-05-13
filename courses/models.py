@@ -25,7 +25,7 @@ class Lesson(models.Model):
     completed_by = models.ManyToManyField(CustomUser, related_name='completed_lessons', blank=True)
 
     def __str__(self):
-        return self.title
+        return f'{self.course} | {self.title}'
 
 
 class ContentLink(models.Model):
@@ -34,4 +34,4 @@ class ContentLink(models.Model):
     href = models.URLField(null=False, blank=False)
 
     def __str__(self):
-        return self.title
+        return f'{self.lesson} | {self.title}'
