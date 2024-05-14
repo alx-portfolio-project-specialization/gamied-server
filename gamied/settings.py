@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'courses',
     'assessments',
     # Third Party
-    'computedfields'
+    'computedfields',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
