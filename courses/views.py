@@ -19,12 +19,10 @@ class LessonListAPIView(ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        # Retrieve the course_id from URL parameters
         course_id = self.kwargs.get('course_id')
         try:
             course = Course.objects.get(pk=course_id)
-            # Filter queryset based on the course_id
-            return Lesson.objects.filter(course=course)
+            return course.lessons.all()
         except Course.DoesNotExist:
             return
 
@@ -38,8 +36,15 @@ class CourseDetailAPIView(RetrieveAPIView):
 
 
 class LessonDetailAPIView(RetrieveAPIView):
-    queryset = Lesson.objects.all()
     serializer_class = DetailedLessonSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     lookup_url_kwarg = 'lesson_id'
+
+    def get_queryset(self):
+        course_id = self.kwargs.get('course_id')
+        try:
+            course = Course.objects.get(pk=course_id)
+            return course.lessons.all()
+        except Course.DoesNotExist:
+            return
