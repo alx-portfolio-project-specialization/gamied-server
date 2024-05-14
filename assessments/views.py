@@ -4,7 +4,6 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from assessments.models import Question, Assessment
 from assessments.serializers import QuestionSerializer, AssessmentSerializer
-from courses.models import Lesson
 
 
 class AssessmentListAPIView(ListAPIView):
