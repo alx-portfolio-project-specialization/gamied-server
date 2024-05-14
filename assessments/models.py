@@ -7,7 +7,7 @@ from courses.models import Lesson
 
 class Assessment(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
-    lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True, blank=True)
+    lesson = models.OneToOneField(Lesson, on_delete=models.CASCADE, null=True, blank=True, related_name='assessment')
 
     def __str__(self):
         return f'{self.lesson} | {self.title}'

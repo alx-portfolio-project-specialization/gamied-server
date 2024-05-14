@@ -27,6 +27,9 @@ class Lesson(models.Model):
     def __str__(self):
         return f'{self.course} | {self.title}'
 
+    def completed(self, user):
+        return self.completed_by.filter(id=user.id).exists()
+
 
 class ContentLink(models.Model):
     lesson = models.ForeignKey(Lesson, null=False, on_delete=models.CASCADE, related_name='content')
