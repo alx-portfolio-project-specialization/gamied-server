@@ -21,7 +21,6 @@ class LessonInline(admin.TabularInline):
     model = Lesson
     formset = LessonFormSet
     extra = 0
-    readonly_fields = ['completed_by']
     fields = ['title']
 
 
@@ -38,7 +37,6 @@ class CourseAdmin(admin.ModelAdmin):
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):
     inlines = [ContentLinkInline]
-    readonly_fields = ['completed_by']
     list_display = ['title', 'course']
     list_filter = ['course']
 

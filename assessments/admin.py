@@ -32,6 +32,7 @@ class AnswerInline(admin.TabularInline):
 class AssessmentAdmin(admin.ModelAdmin):
     inlines = [QuestionInline]
     list_display = ('lesson', 'title')
+    readonly_fields = ['completed_by']
 
 
 @admin.register(Question)

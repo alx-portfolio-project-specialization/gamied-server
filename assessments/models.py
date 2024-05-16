@@ -8,6 +8,10 @@ from courses.models import Lesson
 class Assessment(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
     lesson = models.OneToOneField(Lesson, on_delete=models.CASCADE, null=True, blank=True, related_name='assessment')
+    completed_by = models.ManyToManyField(CustomUser, related_name='completed_lessons', blank=True)
+
+    def completed(self, user):
+        return self.completed_by.filter(id=user.id).exists()
 
     def __str__(self):
         return f'{self.lesson} | {self.title}'
@@ -21,6 +25,10 @@ class Question(models.Model):
     assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, null=False, blank=False, related_name='questions')
     name = models.CharField(max_length=255, null=False, blank=False)
     points = models.PositiveIntegerField(default=0)
+
+    def correct_answer(self):
+        correct_answers = self.answers.filter(is_correct=True)
+        return correct_answers and correct_answers[0]
 
     def __str__(self):
         return f'{self.assessment} | {self.name}'
