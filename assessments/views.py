@@ -85,8 +85,7 @@ class SubmitAssessmentAPIView(APIView):
             penalties = Penalty.objects.filter(user=user).aggregate(total_points=Sum('points'))['total_points']
             user.points = max_points - penalties
             user.save()
-            data = [{**QuestionSerializer(question, context={'request': request}).data, **{'is_correct': question.id not in incorrect}} for question
-                    in questions]
+            data = AssessmentSerializer(assessment, context={'request': request}).data
             return Response(data, status=status.HTTP_200_OK)
         except:
             return Response({'error': 'Missing or invalid value for key `answers`'}, status=status.HTTP_400_BAD_REQUEST)
