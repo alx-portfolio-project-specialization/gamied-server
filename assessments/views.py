@@ -1,3 +1,4 @@
+from django.db.models import Sum
 from rest_framework import status
 from rest_framework.generics import ListAPIView, RetrieveAPIView
 from rest_framework.permissions import IsAuthenticated
@@ -69,17 +70,23 @@ class SubmitAssessmentAPIView(APIView):
         except Assessment.DoesNotExist:
             return Response({'error': 'Assessment not found'}, status.HTTP_404_NOT_FOUND)
         try:
-            answers = {int(k): int(v) for k, v in answers.items()}
-            for question in questions:
-                correct_answer = question.correct_answer()
-                if correct_answer and correct_answer.id != answers.get(question.id):
-                    penalty = Penalty.objects.get_or_create(user=user, question=question)
-                    penalty.points += .2 * question.points
-                    penalty.save()
-                    incorrect.add(question.id)
-            if not incorrect:
-                assessment.lesson.assessment.completed_by.add(user)
-            data = [{**QuestionSerializer(question).data, **{'is_correct': question.id not in incorrect}} for question in questions]
+            if not assessment.completed(user):
+                answers = {int(k): int(v) for k, v in answers.items()}
+                for question in questions:
+                    correct_answer = question.correct_answer()
+                    if correct_answer and correct_answer.id != answers.get(question.id):
+                        penalty, created = Penalty.objects.get_or_create(user=user, question=question)
+                        penalty.points += round(.2 * (question.points - penalty.points))  # Deduct 20% of remaining points
+                        penalty.save()
+                        incorrect.add(question.id)
+                if not incorrect:
+                    assessment.lesson.assessment.completed_by.add(user)
+            max_points = Question.objects.filter(assessment__completed_by=user).aggregate(total_points=Sum('points'))['total_points']
+            penalties = Penalty.objects.filter(user=user).aggregate(total_points=Sum('points'))['total_points']
+            user.points = max_points - penalties
+            user.save()
+            data = [{**QuestionSerializer(question, context={'request': request}).data, **{'is_correct': question.id not in incorrect}} for question
+                    in questions]
             return Response(data, status=status.HTTP_200_OK)
         except:
             return Response({'error': 'Missing or invalid value for key `answers`'}, status=status.HTTP_400_BAD_REQUEST)

@@ -6,7 +6,7 @@ from assessments.models import Assessment, Question, Answer
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
-        fields = ['id', 'name', 'is_correct']
+        fields = ['id', 'name']
 
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -24,7 +24,12 @@ class QuestionSerializer(serializers.ModelSerializer):
 
 class AssessmentSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True, read_only=True)
+    completed = serializers.SerializerMethodField()
 
     class Meta:
         model = Assessment
-        fields = ['id', 'title', 'questions']
+        fields = ['id', 'title', 'questions', 'completed']
+
+    def get_completed(self, obj):
+        user = self.context['request'].user
+        return obj.completed(user)

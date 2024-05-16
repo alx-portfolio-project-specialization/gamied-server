@@ -38,9 +38,6 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-    class Meta:
-        # Ensure that only one answer can be marked as correct for a question
-        unique_together = ('question', 'is_correct')
 
     question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False, blank=False, related_name='answers')
     name = models.CharField(max_length=255, null=False, blank=False)
