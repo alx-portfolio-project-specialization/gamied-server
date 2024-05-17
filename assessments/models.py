@@ -29,11 +29,13 @@ class Assessment(models.Model):
         if self.type == 'quiz' and not self.lesson:
             raise ValidationError('A Quiz must be linked to a lesson')
         elif self.type == 'exam':
-            if not self.title:
+            if self.lesson:
+                raise ValidationError('An exam cannot be linked to a lesson')
+            elif not self.title:
                 raise ValidationError('An assessment of type exam must have a title')
-            if not self.description:
+            elif not self.description:
                 raise ValidationError('An assessment of type exam must have a description')
-            if not self.thumbnail:
+            elif not self.thumbnail:
                 raise ValidationError('An assessment of type exam must have a thumbnail')
 
 
