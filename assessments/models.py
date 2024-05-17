@@ -7,6 +7,10 @@ from courses.models import Lesson
 
 class Assessment(models.Model):
     title = models.CharField(max_length=255, null=True, blank=True)
+    type = models.CharField(choices=[('quiz', 'Quiz'), ('exam', 'Exam')], default='quiz', null=False, blank=False, max_length=50)
+    pass_mark = models.PositiveIntegerField('Pass Mark (%)', default=70)
+    description = models.TextField(null=True, blank=True)
+    thumbnail = models.ImageField(upload_to="assessments/", blank=True, null=True)
     lesson = models.OneToOneField(Lesson, on_delete=models.CASCADE, null=True, blank=True, related_name='assessment')
     completed_by = models.ManyToManyField(CustomUser, related_name='completed_lessons', blank=True)
 
@@ -14,11 +18,35 @@ class Assessment(models.Model):
         return self.completed_by.filter(id=user.id).exists()
 
     def __str__(self):
-        return f'{self.lesson} | {self.title}'
+        if self.lesson and self.title:
+            return f'{self.lesson} | {self.title}'
+        elif self.title:
+            return self.title
+        else:
+            return f'{self.lesson}'
 
     def clean(self):
-        if not self.lesson and not self.title:
-            raise ValidationError({'title': 'Title is required when an assessment is not linked to a lesson'})
+        if self.type == 'quiz' and not self.lesson:
+            raise ValidationError('A Quiz must be linked to a lesson')
+        elif self.type == 'exam':
+            if not self.title:
+                raise ValidationError('An assessment of type exam must have a title')
+            if not self.description:
+                raise ValidationError('An assessment of type exam must have a description')
+            if not self.thumbnail:
+                raise ValidationError('An assessment of type exam must have a thumbnail')
+
+
+class AssessmentAttempt(models.Model):
+    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, null=False, blank=False, related_name='assessment_attempts')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False, blank=False)
+    score = models.PositiveIntegerField('Score (%)')
+
+    def clean(self):
+        if self.assessment.type != 'exam':
+            raise ValidationError('You can only record attempts for assessments of type exam')
+        if self.score > 100 or self.score < 0:
+            raise ValidationError('The provided score score must be between 0 and 100')
 
 
 class Question(models.Model):
@@ -38,7 +66,6 @@ class Question(models.Model):
 
 
 class Answer(models.Model):
-
     question = models.ForeignKey(Question, on_delete=models.CASCADE, null=False, blank=False, related_name='answers')
     name = models.CharField(max_length=255, null=False, blank=False)
     is_correct = models.BooleanField(default=False)
