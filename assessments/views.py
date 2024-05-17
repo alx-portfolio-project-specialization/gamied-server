@@ -84,9 +84,9 @@ class SubmitAssessmentAPIView(APIView):
                             penalty, created = Penalty.objects.get_or_create(user=user, question=question)
                             penalty.points += round(.2 * (question.points - penalty.points))  # Deduct 20% of remaining points
                             penalty.save()
-                            incorrect.add(question.id)
                         else:
                             lost_points += question.points
+                        incorrect.add(question.id)
                 if is_exam:
                     total_points = assessment.total_points()
                     score = round((total_points - lost_points) / (total_points or 1) * 100)
@@ -94,8 +94,9 @@ class SubmitAssessmentAPIView(APIView):
                     passed = score >= assessment.pass_mark
                 if (is_exam and passed) or (not is_exam and not incorrect):  # They passed exam or got all the quiz right
                     assessment.completed_by.add(user)
-            max_points = Question.objects.filter(assessment__completed_by=user).aggregate(total_points=Sum('points'))['total_points']
-            penalties = Penalty.objects.filter(user=user).aggregate(total_points=Sum('points'))['total_points']
+            # Recalculate user points
+            max_points = Question.objects.filter(assessment__completed_by=user).aggregate(total=Sum('points'))['total']
+            penalties = Penalty.objects.filter(user=user).aggregate(total=Sum('points'))['total']
             user.points = max_points - penalties
             user.save()
             data = AssessmentSerializer(assessment, context={'request': request}).data
