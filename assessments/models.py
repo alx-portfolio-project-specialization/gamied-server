@@ -1,3 +1,5 @@
+from django.db.models import Sum
+
 from accounts.models import CustomUser
 from django.core.exceptions import ValidationError
 from django.db import models
@@ -13,6 +15,19 @@ class Assessment(models.Model):
     thumbnail = models.ImageField(upload_to="assessments/", blank=True, null=True)
     lesson = models.OneToOneField(Lesson, on_delete=models.CASCADE, null=True, blank=True, related_name='assessment')
     completed_by = models.ManyToManyField(CustomUser, related_name='completed_lessons', blank=True)
+
+    def total_points(self):
+        return self.questions.all().aggregate(total_points=Sum('points'))['total_points']
+
+    def result(self, user):
+        if self.type != 'exam':
+            return {'score': -999, 'comment': 'N/A'}
+        res = self.results.filter(user=user)
+        if not res:
+            return {'score': -1, 'comment': 'Not Started'}
+        if res.score < self.pass_mark:
+            return {'score': res.score, 'comment': 'Failed'}
+        return {'score': res.score, 'comment': 'Passed'}
 
     def completed(self, user):
         return self.completed_by.filter(id=user.id).exists()
@@ -39,14 +54,17 @@ class Assessment(models.Model):
                 raise ValidationError('An assessment of type exam must have a thumbnail')
 
 
-class AssessmentAttempt(models.Model):
-    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, null=False, blank=False, related_name='assessment_attempts')
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False, blank=False)
+class AssessmentResult(models.Model):
+    class Meta:
+        unique_together = ('user', 'assessment')
+
+    assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, null=False, blank=False, related_name='results')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False, blank=False, related_name='results')
     score = models.PositiveIntegerField('Score (%)')
 
     def clean(self):
         if self.assessment.type != 'exam':
-            raise ValidationError('You can only record attempts for assessments of type exam')
+            raise ValidationError('You can only record results for assessments of type exam')
         if self.score > 100 or self.score < 0:
             raise ValidationError('The provided score score must be between 0 and 100')
 

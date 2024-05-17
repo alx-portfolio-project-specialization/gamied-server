@@ -6,12 +6,12 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
-from assessments.models import Question, Assessment, Penalty
+from assessments.models import Question, Assessment, Penalty, AssessmentResult
 from assessments.serializers import QuestionSerializer, AssessmentSerializer
 
 
 class AssessmentListAPIView(ListAPIView):
-    queryset = Assessment.objects.filter(lesson__isnull=True)
+    queryset = Assessment.objects.filter(type='exam')
     serializer_class = AssessmentSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
@@ -64,23 +64,36 @@ class SubmitAssessmentAPIView(APIView):
         user = request.user
         answers = request.data.get('answers')
         incorrect = set()
+        lost_points = 0
+        passed = False
         try:
             assessment = Assessment.objects.get(id=assessment_id)
             questions = assessment.questions.all()
+            is_exam = assessment.type == 'exam'
         except Assessment.DoesNotExist:
             return Response({'error': 'Assessment not found'}, status.HTTP_404_NOT_FOUND)
         try:
-            if not assessment.completed(user):
-                answers = {int(k): int(v) for k, v in answers.items()}
+            answers = {int(k): int(v) for k, v in answers.items()}
+            not_started = is_exam and assessment.result(user)['score'] == -1
+
+            if not assessment.completed(user) or not_started:
                 for question in questions:
                     correct_answer = question.correct_answer()
                     if correct_answer and correct_answer.id != answers.get(question.id):
-                        penalty, created = Penalty.objects.get_or_create(user=user, question=question)
-                        penalty.points += round(.2 * (question.points - penalty.points))  # Deduct 20% of remaining points
-                        penalty.save()
-                        incorrect.add(question.id)
-                if not incorrect:
-                    assessment.lesson.assessment.completed_by.add(user)
+                        if not is_exam:
+                            penalty, created = Penalty.objects.get_or_create(user=user, question=question)
+                            penalty.points += round(.2 * (question.points - penalty.points))  # Deduct 20% of remaining points
+                            penalty.save()
+                            incorrect.add(question.id)
+                        else:
+                            lost_points += question.points
+                if is_exam:
+                    total_points = assessment.total_points()
+                    score = round((total_points - lost_points) / (total_points or 1) * 100)
+                    AssessmentResult.objects.update_or_create(defaults={'score': score}, user=user, assessment=assessment)
+                    passed = score >= assessment.pass_mark
+                if (is_exam and passed) or (not is_exam and not incorrect):  # They passed exam or got all the quiz right
+                    assessment.completed_by.add(user)
             max_points = Question.objects.filter(assessment__completed_by=user).aggregate(total_points=Sum('points'))['total_points']
             penalties = Penalty.objects.filter(user=user).aggregate(total_points=Sum('points'))['total_points']
             user.points = max_points - penalties

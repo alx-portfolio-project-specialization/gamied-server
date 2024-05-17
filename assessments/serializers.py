@@ -25,11 +25,16 @@ class QuestionSerializer(serializers.ModelSerializer):
 class AssessmentSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True, read_only=True)
     completed = serializers.SerializerMethodField()
+    result = serializers.SerializerMethodField()
 
     class Meta:
         model = Assessment
-        fields = ['id', 'title', 'questions', 'completed']
+        fields = ['id', 'title', 'type', 'pass_mark', 'description', 'thumbnail', 'completed', 'result', 'questions']
 
     def get_completed(self, obj):
         user = self.context['request'].user
         return obj.completed(user)
+
+    def get_result(self, obj):
+        user = self.context['request'].user
+        return obj.result(user)
