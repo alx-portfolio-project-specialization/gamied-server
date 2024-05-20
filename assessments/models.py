@@ -15,6 +15,7 @@ class Assessment(models.Model):
     thumbnail = models.ImageField(upload_to="assessments/", blank=True, null=True)
     lesson = models.OneToOneField(Lesson, on_delete=models.CASCADE, null=True, blank=True, related_name='assessment')
     completed_by = models.ManyToManyField(CustomUser, related_name='completed_lessons', blank=True)
+    time_allowed = models.PositiveIntegerField("Time Allowed (Minutes)", default=30)
 
     def total_points(self):
         return self.questions.all().aggregate(total_points=Sum('points'))['total_points']

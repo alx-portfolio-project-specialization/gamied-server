@@ -29,7 +29,7 @@ class AssessmentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Assessment
-        fields = ['id', 'title', 'type', 'pass_mark', 'description', 'thumbnail', 'completed', 'result', 'questions']
+        fields = ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'completed', 'result', 'questions', 'time_allowed']
 
     def get_completed(self, obj):
         user = self.context['request'].user
@@ -38,3 +38,11 @@ class AssessmentSerializer(serializers.ModelSerializer):
     def get_result(self, obj):
         user = self.context['request'].user
         return obj.result(user)
+
+    def to_representation(self, instance):
+        res = super().to_representation(instance)
+        if instance.type == 'exam':
+            fields = ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'result', 'questions', 'time_allowed']
+        else:
+            fields = ['id', 'completed', 'questions']
+        return {k: v for k, v in res.items() if k in fields}
