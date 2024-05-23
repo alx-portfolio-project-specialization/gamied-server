@@ -1,14 +1,18 @@
+from drf_spectacular.utils import extend_schema
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.contrib.auth import authenticate
 
-from accounts.serializers import CustomUserSerializer
+from accounts.serializers import CustomUserSerializer, LoginRequestSerializer
 
 
 class LoginAPIView(APIView):
+    """Takes a set of user credentials and returns a user object"""
     serializer_class = CustomUserSerializer
 
+    @extend_schema(request=LoginRequestSerializer)
     def post(self, request):
         email = request.data.get('email')
         password = request.data.get('password')

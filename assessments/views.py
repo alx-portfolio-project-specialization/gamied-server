@@ -13,6 +13,7 @@ from drf_spectacular.types import OpenApiTypes
 
 
 class AssessmentListAPIView(ListAPIView):
+    """Returns all assessments of type 'exam'"""
     queryset = Assessment.objects.filter(type='exam')
     serializer_class = AssessmentSerializer
     authentication_classes = [JWTAuthentication]
@@ -20,6 +21,10 @@ class AssessmentListAPIView(ListAPIView):
 
 
 class AssessmentDetailAPIView(RetrieveAPIView):
+    """Retrieves a specific assessment. Returned properties will vary depending on assessment type.\n
+    For Assessment of type exam you get: ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'result', 'questions', 'time_allowed'].\n
+    For Assessment of type quiz you get: ['id', 'completed', 'questions']
+    """
     queryset = Assessment.objects.all()
     serializer_class = AssessmentSerializer
     authentication_classes = [JWTAuthentication]
@@ -28,6 +33,7 @@ class AssessmentDetailAPIView(RetrieveAPIView):
 
 
 class QuestionListAPIView(ListAPIView):
+    """Takes in an assessment id and returns all questions linked to the assessment"""
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
     authentication_classes = [JWTAuthentication]
@@ -43,6 +49,7 @@ class QuestionListAPIView(ListAPIView):
 
 
 class QuestionDetailAPIView(RetrieveAPIView):
+    """Retrieves a question object. The question must be linked to the specified assessment_id"""
     serializer_class = QuestionSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
@@ -58,6 +65,8 @@ class QuestionDetailAPIView(RetrieveAPIView):
 
 
 class SubmitAssessmentAPIView(APIView):
+    """Handles submission of assessments of both type (exam and quiz). \n
+    Expects a parameter named answers in the request body  representing the chosen answer for each question"""
     serializer_class = QuestionSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
