@@ -1,3 +1,5 @@
+from drf_spectacular.types import OpenApiTypes
+from drf_spectacular.utils import extend_schema_field
 from rest_framework import serializers
 from courses.models import Course, Lesson, ContentLink
 from assessments.serializers import AssessmentSerializer
@@ -16,6 +18,7 @@ class CourseSerializer(serializers.ModelSerializer):
         model = Course
         fields = ['id', 'title', 'description', 'progress', 'thumbnail']
 
+    @extend_schema_field(OpenApiTypes.INT)
     def get_progress(self, obj):
         user = self.context['request'].user
         return obj.progress(user)
@@ -28,6 +31,7 @@ class LessonSerializer(serializers.ModelSerializer):
         model = Lesson
         fields = ['id', 'title', 'completed']
 
+    @extend_schema_field(OpenApiTypes.BOOL)
     def get_completed(self, obj):
         user = self.context['request'].user
         return obj.completed(user)

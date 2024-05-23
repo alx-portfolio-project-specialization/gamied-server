@@ -7,7 +7,9 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from assessments.models import Question, Assessment, Penalty, AssessmentResult
-from assessments.serializers import QuestionSerializer, AssessmentSerializer
+from assessments.serializers import QuestionSerializer, AssessmentSerializer, AnswersSerializer
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from drf_spectacular.types import OpenApiTypes
 
 
 class AssessmentListAPIView(ListAPIView):
@@ -60,6 +62,30 @@ class SubmitAssessmentAPIView(APIView):
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(name='assessment_id',
+                             description='Id of the assessment being submitted',
+                             required=True,
+                             type=int,
+                             location=OpenApiParameter.PATH),
+        ],
+        request=AnswersSerializer,
+        examples=[
+            OpenApiExample(
+                "Request Example",
+                value={
+                    "answers": {
+                        1: 15,
+                        2: 35
+                    }
+                },
+                request_only=True,
+                description="Dictionary where the key is the question_id and the value is the answer_id, both must be integers greater than 0",
+            )
+        ],
+
+    )
     def post(self, request, assessment_id, *args, **kwargs):
         user = request.user
         answers = request.data.get('answers')

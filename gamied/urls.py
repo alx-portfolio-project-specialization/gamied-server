@@ -19,10 +19,13 @@ from django.contrib import admin
 from django.urls import path, include
 
 from gamied import settings
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('auth/', include('accounts.urls')),
-    path('courses/', include('courses.urls')),
-    path('assessments/', include('assessments.urls')),
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+                  path('admin/', admin.site.urls),
+                  path('auth/', include('accounts.urls')),
+                  path('courses/', include('courses.urls')),
+                  path('assessments/', include('assessments.urls')),
+                  path('schema/', SpectacularAPIView.as_view(), name='schema'),
+                  path('', SpectacularSwaggerView.as_view(url_name='schema'), name='documentation'),
+              ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
