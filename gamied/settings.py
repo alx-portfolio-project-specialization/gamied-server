@@ -194,7 +194,7 @@ CORS_ALLOW_METHODS = [
     'GET', 'POST',
 ]
 
-try:
-    from .local_settings import *
-except ImportError:
-    pass
+#try:
+from .local_settings import *
+#except ImportError:
+#    pass
