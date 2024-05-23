@@ -193,3 +193,8 @@ CORS_ORIGIN_WHITELIST = [
 CORS_ALLOW_METHODS = [
     'GET', 'POST',
 ]
+
+try:
+    from .local_settings import *
+except ImportError:
+    pass
