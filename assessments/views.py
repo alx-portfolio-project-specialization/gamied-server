@@ -41,7 +41,7 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExampl
     ],
     "time_allowed": 60
 }, response_only=True)
-])
+                         ])
 class AssessmentListAPIView(ListAPIView):
     """Returns all assessments of type 'exam'"""
     queryset = Assessment.objects.filter(type='exam')
@@ -80,7 +80,7 @@ class AssessmentListAPIView(ListAPIView):
     ],
     "time_allowed": 60
 }, response_only=True)
-])
+                         ])
 class AssessmentDetailAPIView(RetrieveAPIView):
     """Retrieves a specific assessment. Returned properties will vary depending on assessment type.\n
     For Assessment of type exam you get: ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'result', 'questions', 'time_allowed'].\n
@@ -93,6 +93,24 @@ class AssessmentDetailAPIView(RetrieveAPIView):
     lookup_url_kwarg = 'assessment_id'
 
 
+@extend_schema(examples=[OpenApiExample('Response Example', {
+    "id": 16,
+    "name": "string",
+    "points": 40,
+    "answers": [
+        {
+            "id": 1,
+            "name": "string",
+            "is_correct": True
+        },
+        {
+            "id": 2,
+            "name": "string",
+            "is_correct": False
+        }
+    ],
+    "lost_points": 0
+}, response_only=True)])
 class QuestionListAPIView(ListAPIView):
     """Takes in an assessment id and returns all questions linked to the assessment"""
     queryset = Question.objects.all()
@@ -109,6 +127,24 @@ class QuestionListAPIView(ListAPIView):
             return
 
 
+@extend_schema(examples=[OpenApiExample('Response Example', {
+    "id": 16,
+    "name": "string",
+    "points": 40,
+    "answers": [
+        {
+            "id": 1,
+            "name": "string",
+            "is_correct": True
+        },
+        {
+            "id": 2,
+            "name": "string",
+            "is_correct": False
+        }
+    ],
+    "lost_points": 0
+}, response_only=True)])
 class QuestionDetailAPIView(RetrieveAPIView):
     """Retrieves a question object. The question must be linked to the specified assessment_id"""
     serializer_class = QuestionSerializer
