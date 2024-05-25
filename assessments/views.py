@@ -50,6 +50,37 @@ class AssessmentListAPIView(ListAPIView):
     permission_classes = [IsAuthenticated]
 
 
+@extend_schema(examples=[OpenApiExample('Response Example', {
+    "id": 1,
+    "title": "string",
+    "pass_mark": 70,
+    "description": "string",
+    "thumbnail": "string",
+    "completed": False,
+    "result": {'score': -1, 'comment': 'Not Started'},
+    "questions": [
+        {
+            "id": 1,
+            "name": "string",
+            "points": 40,
+            "answers": [
+                {
+                    "id": 1,
+                    "name": "string",
+                    "is_correct": True
+                },
+                {
+                    "id": 2,
+                    "name": "string",
+                    "is_correct": False
+                },
+            ],
+            "lost_points": 0
+        }
+    ],
+    "time_allowed": 60
+}, response_only=True)
+])
 class AssessmentDetailAPIView(RetrieveAPIView):
     """Retrieves a specific assessment. Returned properties will vary depending on assessment type.\n
     For Assessment of type exam you get: ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'result', 'questions', 'time_allowed'].\n
