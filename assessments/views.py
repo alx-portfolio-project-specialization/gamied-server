@@ -9,9 +9,39 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from assessments.models import Question, Assessment, Penalty, AssessmentResult
 from assessments.serializers import QuestionSerializer, AssessmentSerializer, AnswersSerializer
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
-from drf_spectacular.types import OpenApiTypes
 
 
+@extend_schema(examples=[OpenApiExample('Response Example', {
+    "id": 1,
+    "title": "string",
+    "pass_mark": 70,
+    "description": "string",
+    "thumbnail": "string",
+    "completed": True,
+    "result": {'score': 80, 'comment': 'Passed'},
+    "questions": [
+        {
+            "id": 1,
+            "name": "string",
+            "points": 40,
+            "answers": [
+                {
+                    "id": 1,
+                    "name": "string",
+                    "is_correct": True
+                },
+                {
+                    "id": 2,
+                    "name": "string",
+                    "is_correct": False
+                },
+            ],
+            "lost_points": 0
+        }
+    ],
+    "time_allowed": 60
+}, response_only=True)
+])
 class AssessmentListAPIView(ListAPIView):
     """Returns all assessments of type 'exam'"""
     queryset = Assessment.objects.filter(type='exam')
@@ -66,8 +96,12 @@ class QuestionDetailAPIView(RetrieveAPIView):
 
 class SubmitAssessmentAPIView(APIView):
     """Handles submission of assessments of both type (exam and quiz). \n
-    Expects a parameter named answers in the request body  representing the chosen answer for each question"""
-    serializer_class = QuestionSerializer
+    Expects a parameter named answers in the request body  representing the chosen answer for each question\n
+    Returns an assessment object. Response properties might be different based on assessment type\n
+    For Assessment of type exam you get: ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'result', 'questions', 'time_allowed'].\n
+    For Assessment of type quiz you get: ['id', 'completed', 'questions']
+    """
+    serializer_class = AssessmentSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
 
@@ -91,7 +125,37 @@ class SubmitAssessmentAPIView(APIView):
                 },
                 request_only=True,
                 description="Dictionary where the key is the question_id and the value is the answer_id, both must be integers greater than 0",
-            )
+            ),
+            OpenApiExample('Response Example', {
+                "id": 1,
+                "title": "string",
+                "pass_mark": 70,
+                "description": "string",
+                "thumbnail": "string",
+                "completed": True,
+                "result": {'score': 80, 'comment': 'Passed'},
+                "questions": [
+                    {
+                        "id": 1,
+                        "name": "string",
+                        "points": 40,
+                        "answers": [
+                            {
+                                "id": 1,
+                                "name": "string",
+                                "is_correct": True
+                            },
+                            {
+                                "id": 2,
+                                "name": "string",
+                                "is_correct": False
+                            },
+                        ],
+                        "lost_points": 0
+                    }
+                ],
+                "time_allowed": 60
+            }, response_only=True)
         ],
 
     )
@@ -110,7 +174,6 @@ class SubmitAssessmentAPIView(APIView):
         try:
             answers = {int(k): int(v) for k, v in answers.items()}
             not_started = is_exam and assessment.result(user)['score'] == -1
-
             if not assessment.completed(user) or not_started:
                 for question in questions:
                     correct_answer = question.correct_answer()
