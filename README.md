@@ -7,6 +7,8 @@
  - SET the password for user postgres to an environment variable: POSTGRES_PASSWORD
  - Create a virtual environment and execute the following within the virtual environment
 ```
+
+
 pip install -r requirements.txt
 python manage.py makemigrations
 python manage.py migrate
