@@ -10,6 +10,7 @@ class UserManager(BaseUserManager):
     use_in_migrations = True
 
     def create_user(self, email, name, password=None, **extra_fields):
+        print("create_user", email)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, name, password, **extra_fields)
 
@@ -56,6 +57,11 @@ class CustomUser(AbstractUser, ComputedFieldsModel):
         ('Expert', 'Expert'),
         ('Master', 'Master')
     ]
+
+    def save(self, *args, **kwargs):
+        if not self.username:
+            self.username = self.email  # Ensure username is unique
+        super().save(*args, **kwargs)
 
     @computed(models.CharField(max_length=100, choices=RANKS, verbose_name='Rank', default='Novice',
                                blank=False, null=False), depends=[['self', ['points']]])
