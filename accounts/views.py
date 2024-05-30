@@ -1,31 +1,20 @@
-from drf_spectacular.utils import extend_schema
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.contrib.auth import authenticate
 
-from accounts.serializers import CustomUserSerializer, LoginRequestSerializer
+from accounts.serializers import CustomUserSerializer
 
 
-class LoginAPIView(APIView):
-    """Takes a set of user credentials and returns a user object"""
+class UserDetailAPIView(APIView):
+    """Returns details about the user calling the API"""
     serializer_class = CustomUserSerializer
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
 
-    @extend_schema(request=LoginRequestSerializer)
-    def post(self, request):
-        email = request.data.get('email')
-        password = request.data.get('password')
-
-        if email is None or password is None:
-            return Response({'error': 'Please provide both email and password'},
-                            status=status.HTTP_400_BAD_REQUEST)
-
-        user = authenticate(email=email, password=password)
-
-        if not user:
-            return Response({'error': 'Invalid credentials'},
-                            status=status.HTTP_401_UNAUTHORIZED)
-
+    def get(self, request):
+        user = request.user
         serializer = CustomUserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
