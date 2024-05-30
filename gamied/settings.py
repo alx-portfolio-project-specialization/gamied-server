@@ -177,10 +177,13 @@ SIMPLE_JWT = {
 
 CORS_ORIGIN_WHITELIST = [
 
-    "https://gamied.johngaitho.info",
+    "https://gamied.tech",
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "http://104.236.109.37:3000"
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://104.236.109.37:3000",
+    "http://104.236.109.37:5173"
 ]
 
 CORS_ALLOW_METHODS = [

@@ -10,7 +10,6 @@ class UserManager(BaseUserManager):
     use_in_migrations = True
 
     def create_user(self, email, name, password=None, **extra_fields):
-        print("create_user", email)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, name, password, **extra_fields)
 
