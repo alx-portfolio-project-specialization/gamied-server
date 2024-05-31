@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from assessments.models import Question, Assessment, Penalty, AssessmentResult
-from assessments.serializers import QuestionSerializer, AssessmentSerializer, AnswersSerializer
+from assessments.serializers import QuestionSerializer, AssessmentSerializer, AnswersSerializer, DetailedAssessmentSerializer
 from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
 
 
@@ -19,26 +19,6 @@ from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExampl
     "thumbnail": "string",
     "completed": True,
     "result": {'score': 80, 'comment': 'Passed'},
-    "questions": [
-        {
-            "id": 1,
-            "name": "string",
-            "points": 40,
-            "answers": [
-                {
-                    "id": 1,
-                    "name": "string",
-                    "is_correct": True
-                },
-                {
-                    "id": 2,
-                    "name": "string",
-                    "is_correct": False
-                },
-            ],
-            "lost_points": 0
-        }
-    ],
     "time_allowed": 60
 }, response_only=True)
                          ])
@@ -58,6 +38,7 @@ class AssessmentListAPIView(ListAPIView):
     "thumbnail": "string",
     "completed": False,
     "result": {'score': -1, 'comment': 'Not Started'},
+    "time_allowed": 60,
     "questions": [
         {
             "id": 1,
@@ -78,7 +59,6 @@ class AssessmentListAPIView(ListAPIView):
             "lost_points": 0
         }
     ],
-    "time_allowed": 60
 }, response_only=True)
                          ])
 class AssessmentDetailAPIView(RetrieveAPIView):

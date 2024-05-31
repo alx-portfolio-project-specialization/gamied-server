@@ -46,7 +46,21 @@ class AssessmentSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         res = super().to_representation(instance)
         if instance.type == 'exam':
-            fields = ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'result', 'questions', 'time_allowed']
+            fields = ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'result', 'time_allowed']
+        else:
+            fields = ['id', 'completed']
+        return {k: v for k, v in res.items() if k in fields}
+
+
+class DetailedAssessmentSerializer(AssessmentSerializer):
+    class Meta:
+        model = Assessment
+        fields = ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'completed', 'result', 'time_allowed', 'questions']
+
+    def to_representation(self, instance):
+        res = super().to_representation(instance)
+        if instance.type == 'exam':
+            fields = ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'result', 'time_allowed', 'questions']
         else:
             fields = ['id', 'completed', 'questions']
         return {k: v for k, v in res.items() if k in fields}
