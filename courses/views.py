@@ -14,6 +14,7 @@ from courses.serializers import CourseSerializer, LessonSerializer, DetailedLess
         "id": 1,
         "title": "string",
         "description": "string",
+        "lessons_count": 5,
         "progress": 25,
         "thumbnail": "string"
     },
@@ -33,6 +34,7 @@ class CourseListAPIView(ListAPIView):
         "id": 16,
         "title": "string",
         "description": "string",
+        "lessons_count": 1,
         "progress": 100,
         "thumbnail": "string",
         "lessons": [
