@@ -13,10 +13,15 @@ class ContentLinkSerializer(serializers.ModelSerializer):
 
 class CourseSerializer(serializers.ModelSerializer):
     progress = serializers.SerializerMethodField()
+    lessons_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
-        fields = ['id', 'title', 'description', 'progress', 'thumbnail']
+        fields = ['id', 'title', 'description', 'lessons_count', 'progress', 'thumbnail']
+
+    @extend_schema_field(OpenApiTypes.INT)
+    def get_lessons_count(self, obj):
+        return obj.lessons.count()
 
     @extend_schema_field(OpenApiTypes.INT)
     def get_progress(self, obj):
@@ -42,7 +47,7 @@ class DetailedCourseSerializer(CourseSerializer):
 
     class Meta:
         model = Course
-        fields = ['id', 'title', 'description', 'progress', 'thumbnail', 'lessons']
+        fields = ['id', 'title', 'description', 'lessons_count', 'progress', 'thumbnail', 'lessons']
 
 
 class DetailedLessonSerializer(LessonSerializer):
