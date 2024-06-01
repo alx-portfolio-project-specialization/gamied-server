@@ -17,11 +17,11 @@ class UserModelAdmin(UserAdmin):
     )
     fieldsets = (
         (_('General information'), {'fields': ('name', 'email', 'password')}),
-        (_('Extra information'), {'fields': ('points', 'rank')}),
+        (_('Extra information'), {'fields': ('points', 'rank', 'avatar')}),
         (_('Permissions'), {
             'fields': ('is_active', 'is_staff', 'is_superuser'),
         }),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
     readonly_fields = ['last_login', 'date_joined', 'points', 'rank']
-    list_display = ['id', 'name', 'email']
+    list_display = ['name', 'email']
