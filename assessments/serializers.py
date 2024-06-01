@@ -24,14 +24,14 @@ class QuestionSerializer(serializers.ModelSerializer):
         return obj.lost_points(user)
 
 
-class AssessmentSerializer(serializers.ModelSerializer):
+class DetailedAssessmentSerializer(serializers.ModelSerializer):
     questions = QuestionSerializer(many=True, read_only=True)
     completed = serializers.SerializerMethodField()
     result = serializers.SerializerMethodField()
 
     class Meta:
         model = Assessment
-        fields = ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'completed', 'result', 'questions', 'time_allowed']
+        fields = ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'completed', 'result', 'time_allowed', 'questions']
 
     @extend_schema_field(OpenApiTypes.BOOL)
     def get_completed(self, obj):
@@ -46,24 +46,19 @@ class AssessmentSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         res = super().to_representation(instance)
         if instance.type == 'exam':
-            fields = ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'result', 'time_allowed']
-        else:
-            fields = ['id', 'completed']
-        return {k: v for k, v in res.items() if k in fields}
-
-
-class DetailedAssessmentSerializer(AssessmentSerializer):
-    class Meta:
-        model = Assessment
-        fields = ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'completed', 'result', 'time_allowed', 'questions']
-
-    def to_representation(self, instance):
-        res = super().to_representation(instance)
-        if instance.type == 'exam':
             fields = ['id', 'title', 'pass_mark', 'description', 'thumbnail', 'result', 'time_allowed', 'questions']
         else:
             fields = ['id', 'completed', 'questions']
         return {k: v for k, v in res.items() if k in fields}
+
+
+class AssessmentSerializer(DetailedAssessmentSerializer):
+    def to_representation(self, instance):
+        res = super().to_representation(instance)
+        detail_keys = ['questions']
+        for k in detail_keys:
+            del res[k]
+        return res
 
 
 class AnswersSerializer(serializers.Serializer):
