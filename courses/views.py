@@ -1,11 +1,10 @@
-from drf_spectacular.utils import extend_schema, OpenApiExample
-
-from rest_framework.generics import ListAPIView, RetrieveAPIView
-from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
 from courses.models import Course
 from courses.serializers import CourseSerializer, LessonSerializer, DetailedLessonSerializer, DetailedCourseSerializer
+from drf_spectacular.utils import extend_schema, OpenApiExample
+from rest_framework.generics import ListAPIView, RetrieveAPIView
+from rest_framework.permissions import IsAuthenticated
 
 
 @extend_schema(examples=[OpenApiExample(
