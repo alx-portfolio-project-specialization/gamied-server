@@ -23,7 +23,8 @@ class UserDetailAPIView(APIView):
             "email": "johndoe@gmail.com",
             "name": "John Doe",
             "points": 116,
-            "rank": "Novice"
+            "rank": "Novice",
+            'avatar': 'https://bit.ly/3Rbhgml'
         },
         response_only=True, )
     ])

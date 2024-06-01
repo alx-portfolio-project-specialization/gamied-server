@@ -43,6 +43,7 @@ class CustomUser(AbstractUser, ComputedFieldsModel):
     email = models.EmailField(unique=True, blank=False, null=False)
     points = models.PositiveIntegerField(default=0)
     rank = models.CharField(max_length=255, blank=True, null=True)
+    avatar = models.ImageField(upload_to='profile/', blank=True, null=True)
 
     objects = UserManager()
     USERNAME_FIELD = "email"
