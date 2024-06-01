@@ -61,7 +61,7 @@ class PenaltyAdmin(admin.ModelAdmin):
         # Disable the ability to change existing penalties
         return False
 
-    def has_delete_permission(self, request, obj=None):
-        # Disable the ability to delete existing penalties
-        return False
+    # def has_delete_permission(self, request, obj=None):
+    #     # Disable the ability to delete existing penalties
+    #     return False
 
