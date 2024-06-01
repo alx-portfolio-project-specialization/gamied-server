@@ -14,6 +14,7 @@ class ContentLinkSerializer(serializers.ModelSerializer):
 class DetailedLessonSerializer(serializers.ModelSerializer):
     content = ContentLinkSerializer(many=True, read_only=True)
     assessment = DetailedAssessmentSerializer(many=False, read_only=True)
+    completed = serializers.SerializerMethodField()
 
     class Meta:
         model = Lesson
