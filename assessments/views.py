@@ -67,7 +67,7 @@ class AssessmentDetailAPIView(RetrieveAPIView):
     For Assessment of type quiz you get: ['id', 'completed', 'questions']
     """
     queryset = Assessment.objects.all()
-    serializer_class = AssessmentSerializer
+    serializer_class = DetailedAssessmentSerializer
     authentication_classes = [JWTAuthentication]
     permission_classes = [IsAuthenticated]
     lookup_url_kwarg = 'assessment_id'
