@@ -240,11 +240,12 @@ class SubmitAssessmentAPIView(APIView):
                 if (is_exam and passed) or (not is_exam and not incorrect):  # They passed exam or got all the quiz right
                     assessment.completed_by.add(user)
             # Recalculate user points
-            max_points = Question.objects.filter(assessment__completed_by=user).aggregate(total=Sum('points'))['total']
-            penalties = Penalty.objects.filter(user=user).aggregate(total=Sum('points'))['total']
-            user.points = max_points - penalties
-            user.save()
-            data = AssessmentSerializer(assessment, context={'request': request}).data
+            if assessment.completed(user):
+                max_points = Question.objects.filter(assessment__completed_by=user).aggregate(total=Sum('points'))['total'] or 0
+                penalties = Penalty.objects.filter(user=user, question__assessment__completed_by=user).aggregate(total=Sum('points'))['total'] or 0
+                user.points = max_points - penalties
+                user.save()
+            data = DetailedAssessmentSerializer(assessment, context={'request': request}).data
             return Response(data, status=status.HTTP_200_OK)
         except:
             return Response({'error': 'Missing or invalid value for key `answers`'}, status=status.HTTP_400_BAD_REQUEST)
