@@ -26,6 +26,7 @@ class Assessment(models.Model):
         res = self.results.filter(user=user)
         if not res:
             return {'score': -1, 'comment': 'Not Started'}
+        res = res[0]
         if res.score < self.pass_mark:
             return {'score': res.score, 'comment': 'Failed'}
         return {'score': res.score, 'comment': 'Passed'}
