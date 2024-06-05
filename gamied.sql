@@ -254,6 +254,21 @@ INSERT INTO courses_lesson (title, course_id) VALUES
 ('Branching and Merging', (SELECT id FROM courses_course WHERE title='Git & GitHub' LIMIT 1)),
 ('Introduction to GitHub', (SELECT id FROM courses_course WHERE title='Git & GitHub' LIMIT 1));
 
+-- Insert content Links
+INSERT INTO courses_contentlink (lesson_id, title, href) VALUES
+((SELECT id FROM courses_lesson WHERE title='Introduction to Git' LIMIT 1), 'Git - Official Website', 'https://git-scm.com/'),
+((SELECT id FROM courses_lesson WHERE title='Introduction to Git' LIMIT 1), 'Git Tutorial - Atlassian', 'https://www.atlassian.com/git/tutorials/what-is-git'),
+((SELECT id FROM courses_lesson WHERE title='Introduction to Git' LIMIT 1), 'Git Basics - W3Schools', 'https://www.w3schools.com/git/'),
+
+((SELECT id FROM courses_lesson WHERE title='Branching and Merging' LIMIT 1), 'Git Branching - Atlassian', 'https://www.atlassian.com/git/tutorials/using-branches'),
+((SELECT id FROM courses_lesson WHERE title='Branching and Merging' LIMIT 1), 'Branching and Merging - Git SCM', 'https://git-scm.com/book/en/v2/Git-Branching-Basic-Branching-and-Merging'),
+((SELECT id FROM courses_lesson WHERE title='Branching and Merging' LIMIT 1), 'Git Branching and Merging - GeeksforGeeks', 'https://www.geeksforgeeks.org/branching-and-merging-in-git/'),
+
+((SELECT id FROM courses_lesson WHERE title='Introduction to GitHub' LIMIT 1), 'GitHub - Official Website', 'https://github.com/'),
+((SELECT id FROM courses_lesson WHERE title='Introduction to GitHub' LIMIT 1), 'GitHub Guides', 'https://guides.github.com/activities/hello-world/'),
+((SELECT id FROM courses_lesson WHERE title='Introduction to GitHub' LIMIT 1), 'Getting Started with GitHub - GitHub Docs', 'https://docs.github.com/en/github/getting-started-with-github');
+
+
 -- Insert assessments (Quizzes for each lesson)
 INSERT INTO assessments_assessment (title, type, pass_mark, description, thumbnail, lesson_id, time_allowed) VALUES
 ('Introduction to Git Quiz', 'quiz', 70, 'Quiz on Introduction to Git', NULL, (SELECT id FROM courses_lesson WHERE title='Introduction to Git' LIMIT 1), 30),
@@ -454,4 +469,363 @@ INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
 ((SELECT id FROM assessments_question WHERE name='How do you clone a repository from GitHub?' LIMIT 1), 'git copy <repository_url>', FALSE),
 ((SELECT id FROM assessments_question WHERE name='How do you clone a repository from GitHub?' LIMIT 1), 'git replicate <repository_url>', FALSE);
 
+-- Insert courses
+INSERT INTO courses_course (title, description, thumbnail) VALUES
+('Financial Accounting Basics', 'A comprehensive course on financial accounting.', NULL);
+
+-- Insert lessons
+INSERT INTO courses_lesson (title, course_id) VALUES
+('Introduction to Financial Accounting', (SELECT id FROM courses_course WHERE title='Financial Accounting Basics' LIMIT 1)),
+('Accounting Principles and Concepts', (SELECT id FROM courses_course WHERE title='Financial Accounting Basics' LIMIT 1)),
+('Financial Statements', (SELECT id FROM courses_course WHERE title='Financial Accounting Basics' LIMIT 1)),
+('Recording Transactions', (SELECT id FROM courses_course WHERE title='Financial Accounting Basics' LIMIT 1)),
+('Adjusting Entries and Closing', (SELECT id FROM courses_course WHERE title='Financial Accounting Basics' LIMIT 1));
+
+-- Insert content links
+INSERT INTO courses_contentlink (lesson_id, title, href) VALUES
+((SELECT id FROM courses_lesson WHERE title='Introduction to Financial Accounting' LIMIT 1), 'Accounting - Wikipedia', 'https://en.wikipedia.org/wiki/Accounting'),
+((SELECT id FROM courses_lesson WHERE title='Introduction to Financial Accounting' LIMIT 1), 'Introduction to Accounting - Investopedia', 'https://www.investopedia.com/terms/a/accounting.asp'),
+
+((SELECT id FROM courses_lesson WHERE title='Accounting Principles and Concepts' LIMIT 1), 'Accounting Principles - AccountingCoach', 'https://www.accountingcoach.com/accounting-principles/explanation'),
+((SELECT id FROM courses_lesson WHERE title='Accounting Principles and Concepts' LIMIT 1), 'GAAP - Investopedia', 'https://www.investopedia.com/terms/g/gaap.asp'),
+
+((SELECT id FROM courses_lesson WHERE title='Financial Statements' LIMIT 1), 'Financial Statements - Investopedia', 'https://www.investopedia.com/terms/f/financial-statements.asp'),
+((SELECT id FROM courses_lesson WHERE title='Financial Statements' LIMIT 1), 'Understanding Financial Statements - AccountingTools', 'https://www.accountingtools.com/articles/financial-statements'),
+
+((SELECT id FROM courses_lesson WHERE title='Recording Transactions' LIMIT 1), 'Recording Transactions - AccountingCoach', 'https://www.accountingcoach.com/bookkeeping/explanation'),
+((SELECT id FROM courses_lesson WHERE title='Recording Transactions' LIMIT 1), 'How to Record Transactions - WikiHow', 'https://www.wikihow.com/Record-Accounting-Journal-Entries'),
+
+((SELECT id FROM courses_lesson WHERE title='Adjusting Entries and Closing' LIMIT 1), 'Adjusting Entries - AccountingCoach', 'https://www.accountingcoach.com/adjusting-entries/explanation'),
+((SELECT id FROM courses_lesson WHERE title='Adjusting Entries and Closing' LIMIT 1), 'Year-End Closing Entries - AccountingTools', 'https://www.accountingtools.com/articles/year-end-closing-entries');
+
+-- Insert assessments (Quizzes for each lesson)
+INSERT INTO assessments_assessment (title, type, pass_mark, description, thumbnail, lesson_id, time_allowed) VALUES
+('Introduction to Financial Accounting Quiz', 'quiz', 70, 'Quiz on Introduction to Financial Accounting', NULL, (SELECT id FROM courses_lesson WHERE title='Introduction to Financial Accounting' LIMIT 1), 30),
+('Accounting Principles and Concepts Quiz', 'quiz', 70, 'Quiz on Accounting Principles and Concepts', NULL, (SELECT id FROM courses_lesson WHERE title='Accounting Principles and Concepts' LIMIT 1), 30),
+('Financial Statements Quiz', 'quiz', 70, 'Quiz on Financial Statements', NULL, (SELECT id FROM courses_lesson WHERE title='Financial Statements' LIMIT 1), 30),
+('Recording Transactions Quiz', 'quiz', 70, 'Quiz on Recording Transactions', NULL, (SELECT id FROM courses_lesson WHERE title='Recording Transactions' LIMIT 1), 30),
+('Adjusting Entries and Closing Quiz', 'quiz', 70, 'Quiz on Adjusting Entries and Closing', NULL, (SELECT id FROM courses_lesson WHERE title='Adjusting Entries and Closing' LIMIT 1), 30);
+
+-- Insert questions and answers for each quiz
+
+-- Introduction to Financial Accounting Quiz
+INSERT INTO assessments_question (assessment_id, name, points) VALUES
+((SELECT id FROM assessments_assessment WHERE title='Introduction to Financial Accounting Quiz' LIMIT 1), 'What is accounting?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Introduction to Financial Accounting Quiz' LIMIT 1), 'Which financial statement shows a company''s financial position?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Introduction to Financial Accounting Quiz' LIMIT 1), 'What is the main objective of financial accounting?', 60),
+((SELECT id FROM assessments_assessment WHERE title='Introduction to Financial Accounting Quiz' LIMIT 1), 'Which of the following is considered an asset?', 80);
+
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is accounting?' LIMIT 1), 'The process of managing people', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is accounting?' LIMIT 1), 'The process of recording financial transactions', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is accounting?' LIMIT 1), 'The process of creating marketing strategies', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is accounting?' LIMIT 1), 'The process of developing software', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='Which financial statement shows a company''s financial position?' LIMIT 1), 'Income Statement', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which financial statement shows a company''s financial position?' LIMIT 1), 'Statement of Cash Flows', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which financial statement shows a company''s financial position?' LIMIT 1), 'Balance Sheet', TRUE),
+((SELECT id FROM assessments_question WHERE name='Which financial statement shows a company''s financial position?' LIMIT 1), 'Statement of Retained Earnings', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='What is the main objective of financial accounting?' LIMIT 1), 'To prepare budgets', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the main objective of financial accounting?' LIMIT 1), 'To provide financial information to external users', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the main objective of financial accounting?' LIMIT 1), 'To manage internal operations', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the main objective of financial accounting?' LIMIT 1), 'To forecast future sales', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='Which of the following is considered an asset?' LIMIT 1), 'Accounts Payable', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which of the following is considered an asset?' LIMIT 1), 'Notes Payable', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which of the following is considered an asset?' LIMIT 1), 'Accounts Receivable', TRUE),
+((SELECT id FROM assessments_question WHERE name='Which of the following is considered an asset?' LIMIT 1), 'Accrued Expenses', FALSE);
+
+-- Accounting Principles and Concepts Quiz
+INSERT INTO assessments_question (assessment_id, name, points) VALUES
+((SELECT id FROM assessments_assessment WHERE title='Accounting Principles and Concepts Quiz' LIMIT 1), 'What does GAAP stand for?', 60),
+((SELECT id FROM assessments_assessment WHERE title='Accounting Principles and Concepts Quiz' LIMIT 1), 'Which principle states that revenue should be recognized when it is earned?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Accounting Principles and Concepts Quiz' LIMIT 1), 'What is the principle of matching?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Accounting Principles and Concepts Quiz' LIMIT 1), 'Which principle requires companies to disclose all financial information?', 80);
+
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What does GAAP stand for?' LIMIT 1), 'Generally Accepted Accounting Policies', FALSE),
+((SELECT id FROM assessments_question WHERE name='What does GAAP stand for?' LIMIT 1), 'Generally Accepted Accounting Principles', TRUE),
+((SELECT id FROM assessments_question WHERE name='What does GAAP stand for?' LIMIT 1), 'Global Accounting and Auditing Practices', FALSE),
+((SELECT id FROM assessments_question WHERE name='What does GAAP stand for?' LIMIT 1), 'General Accounting and Auditing Policies', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='Which principle states that revenue should be recognized when it is earned?' LIMIT 1), 'Matching Principle', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which principle states that revenue should be recognized when it is earned?' LIMIT 1), 'Revenue Recognition Principle', TRUE),
+((SELECT id FROM assessments_question WHERE name='Which principle states that revenue should be recognized when it is earned?' LIMIT 1), 'Full Disclosure Principle', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which principle states that revenue should be recognized when it is earned?' LIMIT 1), 'Historical Cost Principle', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='What is the principle of matching?' LIMIT 1), 'Expenses should be matched with revenues', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the principle of matching?' LIMIT 1), 'Assets should be matched with liabilities', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the principle of matching?' LIMIT 1), 'Expenses should be recorded when paid', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the principle of matching?' LIMIT 1), 'Revenues should be recorded when received', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='Which principle requires companies to disclose all financial information?' LIMIT 1), 'Conservatism Principle', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which principle requires companies to disclose all financial information?' LIMIT 1), 'Full Disclosure Principle', TRUE),
+((SELECT id FROM assessments_question WHERE name='Which principle requires companies to disclose all financial information?' LIMIT 1), 'Materiality Principle', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which principle requires companies to disclose all financial information?' LIMIT 1), 'Revenue Recognition Principle', FALSE);
+
+-- Financial Statements Quiz
+INSERT INTO assessments_question (assessment_id, name, points) VALUES
+((SELECT id FROM assessments_assessment WHERE title='Financial Statements Quiz' LIMIT 1), 'What does an income statement show?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Financial Statements Quiz' LIMIT 1), 'Which statement shows the inflow and outflow of cash?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Financial Statements Quiz' LIMIT 1), 'Which financial statement includes assets, liabilities, and equity?', 60),
+((SELECT id FROM assessments_assessment WHERE title='Financial Statements Quiz' LIMIT 1), 'What is the formula for net income?', 80);
+
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What does an income statement show?' LIMIT 1), 'Assets and liabilities', FALSE),
+((SELECT id FROM assessments_question WHERE name='What does an income statement show?' LIMIT 1), 'Revenues and expenses', TRUE),
+((SELECT id FROM assessments_question WHERE name='What does an income statement show?' LIMIT 1), 'Cash inflows and outflows', FALSE),
+((SELECT id FROM assessments_question WHERE name='What does an income statement show?' LIMIT 1), 'Equity', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='Which statement shows the inflow and outflow of cash?' LIMIT 1), 'Balance Sheet', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which statement shows the inflow and outflow of cash?' LIMIT 1), 'Statement of Cash Flows', TRUE),
+((SELECT id FROM assessments_question WHERE name='Which statement shows the inflow and outflow of cash?' LIMIT 1), 'Income Statement', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which statement shows the inflow and outflow of cash?' LIMIT 1), 'Statement of Retained Earnings', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='Which financial statement includes assets, liabilities, and equity?' LIMIT 1), 'Income Statement', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which financial statement includes assets, liabilities, and equity?' LIMIT 1), 'Statement of Cash Flows', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which financial statement includes assets, liabilities, and equity?' LIMIT 1), 'Balance Sheet', TRUE),
+((SELECT id FROM assessments_question WHERE name='Which financial statement includes assets, liabilities, and equity?' LIMIT 1), 'Statement of Retained Earnings', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='What is the formula for net income?' LIMIT 1), 'Revenue - Expenses', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the formula for net income?' LIMIT 1), 'Assets - Liabilities', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the formula for net income?' LIMIT 1), 'Income - Taxes', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the formula for net income?' LIMIT 1), 'Equity + Revenue', FALSE);
+
+-- Recording Transactions Quiz
+INSERT INTO assessments_question (assessment_id, name, points) VALUES
+((SELECT id FROM assessments_assessment WHERE title='Recording Transactions Quiz' LIMIT 1), 'Which journal entry records a cash sale?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Recording Transactions Quiz' LIMIT 1), 'How do you record a purchase on account?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Recording Transactions Quiz' LIMIT 1), 'What is a debit?', 60),
+((SELECT id FROM assessments_assessment WHERE title='Recording Transactions Quiz' LIMIT 1), 'What is a credit?', 80);
+
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='Which journal entry records a cash sale?' LIMIT 1), 'Debit Cash, Credit Sales', TRUE),
+((SELECT id FROM assessments_question WHERE name='Which journal entry records a cash sale?' LIMIT 1), 'Debit Sales, Credit Cash', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which journal entry records a cash sale?' LIMIT 1), 'Debit Accounts Receivable, Credit Sales', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which journal entry records a cash sale?' LIMIT 1), 'Debit Sales, Credit Accounts Receivable', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='How do you record a purchase on account?' LIMIT 1), 'Debit Cash, Credit Accounts Payable', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you record a purchase on account?' LIMIT 1), 'Debit Accounts Payable, Credit Cash', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you record a purchase on account?' LIMIT 1), 'Debit Purchases, Credit Accounts Payable', TRUE),
+((SELECT id FROM assessments_question WHERE name='How do you record a purchase on account?' LIMIT 1), 'Debit Accounts Payable, Credit Purchases', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='What is a debit?' LIMIT 1), 'An entry on the right side of an account', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is a debit?' LIMIT 1), 'An entry on the left side of an account', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is a debit?' LIMIT 1), 'A reduction in revenue', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is a debit?' LIMIT 1), 'An increase in liabilities', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='What is a credit?' LIMIT 1), 'An entry on the left side of an account', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is a credit?' LIMIT 1), 'An entry on the right side of an account', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is a credit?' LIMIT 1), 'An increase in expenses', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is a credit?' LIMIT 1), 'A decrease in assets', FALSE);
+
+-- Adjusting Entries and Closing Quiz
+INSERT INTO assessments_question (assessment_id, name, points) VALUES
+((SELECT id FROM assessments_assessment WHERE title='Adjusting Entries and Closing Quiz' LIMIT 1), 'What is an adjusting entry?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Adjusting Entries and Closing Quiz' LIMIT 1), 'When are adjusting entries made?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Adjusting Entries and Closing Quiz' LIMIT 1), 'What is the purpose of closing entries?', 60),
+((SELECT id FROM assessments_assessment WHERE title='Adjusting Entries and Closing Quiz' LIMIT 1), 'Which account is typically affected by adjusting entries?', 80);
+
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is an adjusting entry?' LIMIT 1), 'An entry made to correct errors', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is an adjusting entry?' LIMIT 1), 'An entry made to update account balances', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is an adjusting entry?' LIMIT 1), 'An entry made to record transactions', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is an adjusting entry?' LIMIT 1), 'An entry made to close accounts', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='When are adjusting entries made?' LIMIT 1), 'At the beginning of the accounting period', FALSE),
+((SELECT id FROM assessments_question WHERE name='When are adjusting entries made?' LIMIT 1), 'During the accounting period', FALSE),
+((SELECT id FROM assessments_question WHERE name='When are adjusting entries made?' LIMIT 1), 'At the end of the accounting period', TRUE),
+((SELECT id FROM assessments_question WHERE name='When are adjusting entries made?' LIMIT 1), 'Anytime an error is found', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='What is the purpose of closing entries?' LIMIT 1), 'To finalize account balances for the next period', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of closing entries?' LIMIT 1), 'To zero out temporary accounts', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of closing entries?' LIMIT 1), 'To adjust financial statements', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of closing entries?' LIMIT 1), 'To record new transactions', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='Which account is typically affected by adjusting entries?' LIMIT 1), 'Cash', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which account is typically affected by adjusting entries?' LIMIT 1), 'Accounts Receivable', TRUE),
+((SELECT id FROM assessments_question WHERE name='Which account is typically affected by adjusting entries?' LIMIT 1), 'Revenue', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which account is typically affected by adjusting entries?' LIMIT 1), 'Equity', FALSE);
+
+-- Insert courses
+INSERT INTO courses_course (title, description, thumbnail) VALUES
+('Photoshop and Graphic Design', 'A comprehensive course on Photoshop and graphic design.', NULL);
+
+-- Insert lessons
+INSERT INTO courses_lesson (title, course_id) VALUES
+('Introduction to Photoshop', (SELECT id FROM courses_course WHERE title='Photoshop and Graphic Design' LIMIT 1)),
+('Basic Tools and Techniques', (SELECT id FROM courses_course WHERE title='Photoshop and Graphic Design' LIMIT 1)),
+('Working with Layers', (SELECT id FROM courses_course WHERE title='Photoshop and Graphic Design' LIMIT 1)),
+('Advanced Editing Techniques', (SELECT id FROM courses_course WHERE title='Photoshop and Graphic Design' LIMIT 1)),
+('Design Principles', (SELECT id FROM courses_course WHERE title='Photoshop and Graphic Design' LIMIT 1));
+
+-- Insert content links
+INSERT INTO courses_contentlink (lesson_id, title, href) VALUES
+((SELECT id FROM courses_lesson WHERE title='Introduction to Photoshop' LIMIT 1), 'Photoshop - Official Website', 'https://www.adobe.com/products/photoshop.html'),
+((SELECT id FROM courses_lesson WHERE title='Introduction to Photoshop' LIMIT 1), 'Photoshop Basics - Adobe', 'https://helpx.adobe.com/photoshop/tutorials.html'),
+
+((SELECT id FROM courses_lesson WHERE title='Basic Tools and Techniques' LIMIT 1), 'Photoshop Tools - Adobe', 'https://helpx.adobe.com/photoshop/using/tools.html'),
+((SELECT id FROM courses_lesson WHERE title='Basic Tools and Techniques' LIMIT 1), 'Basic Photoshop Techniques - CreativeBloq', 'https://www.creativebloq.com/photoshop/tutorials'),
+
+((SELECT id FROM courses_lesson WHERE title='Working with Layers' LIMIT 1), 'Photoshop Layers - Adobe', 'https://helpx.adobe.com/photoshop/using/layer-basics.html'),
+((SELECT id FROM courses_lesson WHERE title='Working with Layers' LIMIT 1), 'Layer Techniques - Photoshop Essentials', 'https://www.photoshopessentials.com/photo-editing/layers/'),
+
+((SELECT id FROM courses_lesson WHERE title='Advanced Editing Techniques' LIMIT 1), 'Advanced Photoshop Techniques - Adobe', 'https://helpx.adobe.com/photoshop/using/advanced-compositing.html'),
+((SELECT id FROM courses_lesson WHERE title='Advanced Editing Techniques' LIMIT 1), 'Advanced Editing - PhotoshopCAFE', 'https://photoshopcafe.com/tutorials.htm'),
+
+((SELECT id FROM courses_lesson WHERE title='Design Principles' LIMIT 1), 'Graphic Design Principles - Canva', 'https://www.canva.com/learn/graphic-design-basics/'),
+((SELECT id FROM courses_lesson WHERE title='Design Principles' LIMIT 1), 'Design Principles - Tuts+', 'https://design.tutsplus.com/articles/27-principles-of-good-web-design--webdesign-9418');
+
+-- Insert assessments (Quizzes for each lesson)
+INSERT INTO assessments_assessment (title, type, pass_mark, description, thumbnail, lesson_id, time_allowed) VALUES
+('Introduction to Photoshop Quiz', 'quiz', 70, 'Quiz on Introduction to Photoshop', NULL, (SELECT id FROM courses_lesson WHERE title='Introduction to Photoshop' LIMIT 1), 30),
+('Basic Tools and Techniques Quiz', 'quiz', 70, 'Quiz on Basic Tools and Techniques', NULL, (SELECT id FROM courses_lesson WHERE title='Basic Tools and Techniques' LIMIT 1), 30),
+('Working with Layers Quiz', 'quiz', 70, 'Quiz on Working with Layers', NULL, (SELECT id FROM courses_lesson WHERE title='Working with Layers' LIMIT 1), 30),
+('Advanced Editing Techniques Quiz', 'quiz', 70, 'Quiz on Advanced Editing Techniques', NULL, (SELECT id FROM courses_lesson WHERE title='Advanced Editing Techniques' LIMIT 1), 30),
+('Design Principles Quiz', 'quiz', 70, 'Quiz on Design Principles', NULL, (SELECT id FROM courses_lesson WHERE title='Design Principles' LIMIT 1), 30);
+
+-- Insert questions and answers for each quiz
+
+-- Introduction to Photoshop Quiz
+INSERT INTO assessments_question (assessment_id, name, points) VALUES
+((SELECT id FROM assessments_assessment WHERE title='Introduction to Photoshop Quiz' LIMIT 1), 'What is Photoshop?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Introduction to Photoshop Quiz' LIMIT 1), 'Which company developed Photoshop?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Introduction to Photoshop Quiz' LIMIT 1), 'What is the primary function of Photoshop?', 60),
+((SELECT id FROM assessments_assessment WHERE title='Introduction to Photoshop Quiz' LIMIT 1), 'Which of the following is a file format supported by Photoshop?', 80);
+
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is Photoshop?' LIMIT 1), 'A web browser', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is Photoshop?' LIMIT 1), 'A programming language', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is Photoshop?' LIMIT 1), 'A graphic design software', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is Photoshop?' LIMIT 1), 'A database management system', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='Which company developed Photoshop?' LIMIT 1), 'Microsoft', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which company developed Photoshop?' LIMIT 1), 'Google', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which company developed Photoshop?' LIMIT 1), 'Adobe', TRUE),
+((SELECT id FROM assessments_question WHERE name='Which company developed Photoshop?' LIMIT 1), 'Apple', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='What is the primary function of Photoshop?' LIMIT 1), 'Creating spreadsheets', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the primary function of Photoshop?' LIMIT 1), 'Managing databases', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the primary function of Photoshop?' LIMIT 1), 'Editing images and graphics', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the primary function of Photoshop?' LIMIT 1), 'Developing websites', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='Which of the following is a file format supported by Photoshop?' LIMIT 1), '.txt', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which of the following is a file format supported by Photoshop?' LIMIT 1), '.psd', TRUE),
+((SELECT id FROM assessments_question WHERE name='Which of the following is a file format supported by Photoshop?' LIMIT 1), '.exe', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which of the following is a file format supported by Photoshop?' LIMIT 1), '.java', FALSE);
+
+-- Basic Tools and Techniques Quiz
+INSERT INTO assessments_question (assessment_id, name, points) VALUES
+((SELECT id FROM assessments_assessment WHERE title='Basic Tools and Techniques Quiz' LIMIT 1), 'What is the use of the Move Tool in Photoshop?', 60),
+((SELECT id FROM assessments_assessment WHERE title='Basic Tools and Techniques Quiz' LIMIT 1), 'Which tool is used to select areas of an image based on color?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Basic Tools and Techniques Quiz' LIMIT 1), 'What does the Crop Tool do?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Basic Tools and Techniques Quiz' LIMIT 1), 'How do you zoom in and out of an image?', 80);
+
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the use of the Move Tool in Photoshop?' LIMIT 1), 'To move selected areas or layers', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the use of the Move Tool in Photoshop?' LIMIT 1), 'To draw shapes', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the use of the Move Tool in Photoshop?' LIMIT 1), 'To apply filters', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the use of the Move Tool in Photoshop?' LIMIT 1), 'To adjust colors', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='Which tool is used to select areas of an image based on color?' LIMIT 1), 'Magic Wand Tool', TRUE),
+((SELECT id FROM assessments_question WHERE name='Which tool is used to select areas of an image based on color?' LIMIT 1), 'Brush Tool', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which tool is used to select areas of an image based on color?' LIMIT 1), 'Eraser Tool', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which tool is used to select areas of an image based on color?' LIMIT 1), 'Clone Stamp Tool', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='What does the Crop Tool do?' LIMIT 1), 'Removes selected areas of an image', TRUE),
+((SELECT id FROM assessments_question WHERE name='What does the Crop Tool do?' LIMIT 1), 'Adds text to an image', FALSE),
+((SELECT id FROM assessments_question WHERE name='What does the Crop Tool do?' LIMIT 1), 'Adjusts the brightness of an image', FALSE),
+((SELECT id FROM assessments_question WHERE name='What does the Crop Tool do?' LIMIT 1), 'Applies filters to an image', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='How do you zoom in and out of an image?' LIMIT 1), 'Using the Zoom Tool', TRUE),
+((SELECT id FROM assessments_question WHERE name='How do you zoom in and out of an image?' LIMIT 1), 'Using the Brush Tool', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you zoom in and out of an image?' LIMIT 1), 'Using the Move Tool', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you zoom in and out of an image?' LIMIT 1), 'Using the Eraser Tool', FALSE);
+
+-- Working with Layers Quiz
+INSERT INTO assessments_question (assessment_id, name, points) VALUES
+((SELECT id FROM assessments_assessment WHERE title='Working with Layers Quiz' LIMIT 1), 'What is a layer in Photoshop?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Working with Layers Quiz' LIMIT 1), 'How do you create a new layer?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Working with Layers Quiz' LIMIT 1), 'What is the purpose of layer masks?', 60),
+((SELECT id FROM assessments_assessment WHERE title='Working with Layers Quiz' LIMIT 1), 'How do you merge layers?', 80);
+
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is a layer in Photoshop?' LIMIT 1), 'A separate level on which you can edit and manipulate an image', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is a layer in Photoshop?' LIMIT 1), 'A filter applied to an image', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is a layer in Photoshop?' LIMIT 1), 'A tool used to draw shapes', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is a layer in Photoshop?' LIMIT 1), 'A type of brush', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='How do you create a new layer?' LIMIT 1), 'By clicking the "New Layer" button', TRUE),
+((SELECT id FROM assessments_question WHERE name='How do you create a new layer?' LIMIT 1), 'By using the Brush Tool', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you create a new layer?' LIMIT 1), 'By applying a filter', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you create a new layer?' LIMIT 1), 'By adjusting the brightness', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='What is the purpose of layer masks?' LIMIT 1), 'To hide or reveal parts of a layer', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of layer masks?' LIMIT 1), 'To apply filters', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of layer masks?' LIMIT 1), 'To change the color of a layer', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of layer masks?' LIMIT 1), 'To merge layers', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='How do you merge layers?' LIMIT 1), 'By selecting the layers and choosing "Merge Layers"', TRUE),
+((SELECT id FROM assessments_question WHERE name='How do you merge layers?' LIMIT 1), 'By using the Brush Tool', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you merge layers?' LIMIT 1), 'By clicking the "New Layer" button', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you merge layers?' LIMIT 1), 'By applying a filter', FALSE);
+
+-- Advanced Editing Techniques Quiz
+INSERT INTO assessments_question (assessment_id, name, points) VALUES
+((SELECT id FROM assessments_assessment WHERE title='Advanced Editing Techniques Quiz' LIMIT 1), 'What is the Clone Stamp Tool used for?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Advanced Editing Techniques Quiz' LIMIT 1), 'How do you apply a filter to an image?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Advanced Editing Techniques Quiz' LIMIT 1), 'What is the purpose of the Healing Brush Tool?', 60),
+((SELECT id FROM assessments_assessment WHERE title='Advanced Editing Techniques Quiz' LIMIT 1), 'How do you create a composite image?', 80);
+
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the Clone Stamp Tool used for?' LIMIT 1), 'To copy and paste areas of an image', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the Clone Stamp Tool used for?' LIMIT 1), 'To draw shapes', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the Clone Stamp Tool used for?' LIMIT 1), 'To adjust brightness', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the Clone Stamp Tool used for?' LIMIT 1), 'To add text', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='How do you apply a filter to an image?' LIMIT 1), 'By selecting "Filter" from the menu', TRUE),
+((SELECT id FROM assessments_question WHERE name='How do you apply a filter to an image?' LIMIT 1), 'By using the Brush Tool', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you apply a filter to an image?' LIMIT 1), 'By clicking the "New Layer" button', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you apply a filter to an image?' LIMIT 1), 'By adjusting the brightness', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='What is the purpose of the Healing Brush Tool?' LIMIT 1), 'To remove blemishes and imperfections', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of the Healing Brush Tool?' LIMIT 1), 'To draw shapes', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of the Healing Brush Tool?' LIMIT 1), 'To apply filters', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of the Healing Brush Tool?' LIMIT 1), 'To adjust colors', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='How do you create a composite image?' LIMIT 1), 'By combining multiple images into one', TRUE),
+((SELECT id FROM assessments_question WHERE name='How do you create a composite image?' LIMIT 1), 'By applying a filter', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you create a composite image?' LIMIT 1), 'By using the Brush Tool', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you create a composite image?' LIMIT 1), 'By adjusting brightness', FALSE);
+
+-- Design Principles Quiz
+INSERT INTO assessments_question (assessment_id, name, points) VALUES
+((SELECT id FROM assessments_assessment WHERE title='Design Principles Quiz' LIMIT 1), 'What is the rule of thirds?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Design Principles Quiz' LIMIT 1), 'Which principle involves creating a focal point in a design?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Design Principles Quiz' LIMIT 1), 'What is the purpose of contrast in design?', 60),
+((SELECT id FROM assessments_assessment WHERE title='Design Principles Quiz' LIMIT 1), 'How do you achieve balance in a design?', 80);
+
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the rule of thirds?' LIMIT 1), 'A technique to divide an image into nine equal parts', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the rule of thirds?' LIMIT 1), 'A rule for color selection', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the rule of thirds?' LIMIT 1), 'A method for drawing shapes', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the rule of thirds?' LIMIT 1), 'A way to create gradients', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='Which principle involves creating a focal point in a design?' LIMIT 1), 'Emphasis', TRUE),
+((SELECT id FROM assessments_question WHERE name='Which principle involves creating a focal point in a design?' LIMIT 1), 'Repetition', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which principle involves creating a focal point in a design?' LIMIT 1), 'Alignment', FALSE),
+((SELECT id FROM assessments_question WHERE name='Which principle involves creating a focal point in a design?' LIMIT 1), 'Proximity', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='What is the purpose of contrast in design?' LIMIT 1), 'To create visual interest and highlight differences', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of contrast in design?' LIMIT 1), 'To blend elements together', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of contrast in design?' LIMIT 1), 'To make text larger', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of contrast in design?' LIMIT 1), 'To change colors', FALSE),
+
+((SELECT id FROM assessments_question WHERE name='How do you achieve balance in a design?' LIMIT 1), 'By distributing elements evenly', TRUE),
+((SELECT id FROM assessments_question WHERE name='How do you achieve balance in a design?' LIMIT 1), 'By using one color', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you achieve balance in a design?' LIMIT 1), 'By drawing shapes', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you achieve balance in a design?' LIMIT 1), 'By adding text', FALSE);
+
 COMMIT;
+
