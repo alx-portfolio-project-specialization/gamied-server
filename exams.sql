@@ -1,7 +1,7 @@
 -- Insert data into existing tables
 START TRANSACTION;
 
--- Python Programming Exam
+-- Exam start ---
 INSERT INTO assessments_assessment (title, type, pass_mark, description, thumbnail, lesson_id, time_allowed) VALUES
 ('Python Programming Exam', 'exam', 75, 'Comprehensive exam on Python programming concepts and practices.', NULL, NULL, 60);
 
@@ -171,7 +171,7 @@ INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
 ((SELECT id FROM assessments_question WHERE name='Which module in Python is used to work with regular expressions?' ORDER BY id DESC LIMIT 1), 'reg', FALSE);
 
 
--- Accounting Exam
+-- Exam start ---
 INSERT INTO assessments_assessment (title, type, pass_mark, description, thumbnail, lesson_id, time_allowed) VALUES
 ('Accounting Exam', 'exam', 70, 'Comprehensive exam on Accounting principles and practices.', NULL, NULL, 60);
 
@@ -339,5 +339,343 @@ INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
 ((SELECT id FROM assessments_question WHERE name='What is the purpose of closing entries?' ORDER BY id DESC LIMIT 1), 'To adjust the company''s financial statements', FALSE),
 ((SELECT id FROM assessments_question WHERE name='What is the purpose of closing entries?' ORDER BY id DESC LIMIT 1), 'To record new transactions', FALSE),
 ((SELECT id FROM assessments_question WHERE name='What is the purpose of closing entries?' ORDER BY id DESC LIMIT 1), 'To finalize account balances for the next period', FALSE);
+
+-- Exam start ---
+INSERT INTO assessments_assessment (title, type, pass_mark, description, thumbnail, lesson_id, time_allowed) VALUES
+('Business Management Exam', 'exam', 75, 'Comprehensive exam on Business Management concepts and practices.', NULL, NULL, 60);
+
+-- Insert questions for the assessment
+INSERT INTO assessments_question (assessment_id, name, points) VALUES
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is the role of a manager?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is SWOT analysis?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What are the four functions of management?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is the difference between leadership and management?', 60),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is strategic planning?', 80),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is the importance of organizational culture?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What are the types of business ownership?', 60),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is change management?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is the role of HR in a company?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is market segmentation?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is the importance of financial management?', 60),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is business ethics?', 80),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is the purpose of a business plan?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is decision-making process?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What are the key components of supply chain management?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is risk management?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is the role of innovation in business?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What are the characteristics of a good leader?', 40),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is the importance of customer relationship management (CRM)?', 20),
+((SELECT id FROM assessments_assessment WHERE title='Business Management Exam' LIMIT 1), 'What is project management?', 20);
+
+-- Insert answers for each question
+
+-- Question 1
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the role of a manager?' ORDER BY id DESC LIMIT 1), 'To make decisions and oversee operations', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the role of a manager?' ORDER BY id DESC LIMIT 1), 'To follow employee instructions', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the role of a manager?' ORDER BY id DESC LIMIT 1), 'To work independently without any team', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the role of a manager?' ORDER BY id DESC LIMIT 1), 'To ignore company goals', FALSE);
+
+-- Question 2
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is SWOT analysis?' ORDER BY id DESC LIMIT 1), 'A method to analyze strengths, weaknesses, opportunities, and threats', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is SWOT analysis?' ORDER BY id DESC LIMIT 1), 'A technique for market research', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is SWOT analysis?' ORDER BY id DESC LIMIT 1), 'A tool for financial analysis', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is SWOT analysis?' ORDER BY id DESC LIMIT 1), 'A way to manage employees', FALSE);
+
+-- Question 3
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What are the four functions of management?' ORDER BY id DESC LIMIT 1), 'Planning, organizing, leading, and controlling', TRUE),
+((SELECT id FROM assessments_question WHERE name='What are the four functions of management?' ORDER BY id DESC LIMIT 1), 'Planning, marketing, selling, and financing', FALSE),
+((SELECT id FROM assessments_question WHERE name='What are the four functions of management?' ORDER BY id DESC LIMIT 1), 'Organizing, staffing, directing, and reporting', FALSE),
+((SELECT id FROM assessments_question WHERE name='What are the four functions of management?' ORDER BY id DESC LIMIT 1), 'Planning, producing, marketing, and controlling', FALSE);
+
+-- Question 4
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the difference between leadership and management?' ORDER BY id DESC LIMIT 1), 'Leadership involves inspiring, while management involves planning and organizing', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the difference between leadership and management?' ORDER BY id DESC LIMIT 1), 'Leadership involves controlling, while management involves following', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the difference between leadership and management?' ORDER BY id DESC LIMIT 1), 'Leadership and management are the same', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the difference between leadership and management?' ORDER BY id DESC LIMIT 1), 'Leadership involves marketing, while management involves finance', FALSE);
+
+-- Question 5
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is strategic planning?' ORDER BY id DESC LIMIT 1), 'The process of defining a company''s direction and making decisions on allocating resources', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is strategic planning?' ORDER BY id DESC LIMIT 1), 'A short-term financial planning', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is strategic planning?' ORDER BY id DESC LIMIT 1), 'A process for daily operations management', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is strategic planning?' ORDER BY id DESC LIMIT 1), 'A method to manage employee tasks', FALSE);
+
+-- Question 6
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the importance of organizational culture?' ORDER BY id DESC LIMIT 1), 'It defines the values, beliefs, and behaviors that determine how employees interact', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the importance of organizational culture?' ORDER BY id DESC LIMIT 1), 'It is irrelevant in modern business', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the importance of organizational culture?' ORDER BY id DESC LIMIT 1), 'It only applies to large corporations', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the importance of organizational culture?' ORDER BY id DESC LIMIT 1), 'It is a concept used only in marketing', FALSE);
+
+-- Question 7
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What are the types of business ownership?' ORDER BY id DESC LIMIT 1), 'Sole proprietorship, partnership, corporation, LLC', TRUE),
+((SELECT id FROM assessments_question WHERE name='What are the types of business ownership?' ORDER BY id DESC LIMIT 1), 'Sole proprietorship, corporation, non-profit', FALSE),
+((SELECT id FROM assessments_question WHERE name='What are the types of business ownership?' ORDER BY id DESC LIMIT 1), 'Partnership, LLC, franchise', FALSE),
+((SELECT id FROM assessments_question WHERE name='What are the types of business ownership?' ORDER BY id DESC LIMIT 1), 'Corporation, sole proprietorship, partnership', FALSE);
+
+-- Question 8
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is change management?' ORDER BY id DESC LIMIT 1), 'The process of helping individuals and teams adapt to organizational change', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is change management?' ORDER BY id DESC LIMIT 1), 'A strategy for financial planning', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is change management?' ORDER BY id DESC LIMIT 1), 'A method to manage customer relationships', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is change management?' ORDER BY id DESC LIMIT 1), 'A process for inventory control', FALSE);
+
+-- Question 9
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the role of HR in a company?' ORDER BY id DESC LIMIT 1), 'To recruit, hire, and manage employee relations', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the role of HR in a company?' ORDER BY id DESC LIMIT 1), 'To manage company finances', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the role of HR in a company?' ORDER BY id DESC LIMIT 1), 'To develop marketing strategies', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the role of HR in a company?' ORDER BY id DESC LIMIT 1), 'To oversee production processes', FALSE);
+
+-- Question 10
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is market segmentation?' ORDER BY id DESC LIMIT 1), 'The process of dividing a market into distinct groups of buyers', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is market segmentation?' ORDER BY id DESC LIMIT 1), 'A strategy for financial investment', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is market segmentation?' ORDER BY id DESC LIMIT 1), 'A method to manage employee performance', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is market segmentation?' ORDER BY id DESC LIMIT 1), 'A technique for production planning', FALSE);
+
+-- Question 11
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the importance of financial management?' ORDER BY id DESC LIMIT 1), 'It ensures efficient and effective management of money', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the importance of financial management?' ORDER BY id DESC LIMIT 1), 'It is not necessary for small businesses', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the importance of financial management?' ORDER BY id DESC LIMIT 1), 'It only applies to large companies', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the importance of financial management?' ORDER BY id DESC LIMIT 1), 'It is a function of HR', FALSE);
+
+-- Question 12
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is business ethics?' ORDER BY id DESC LIMIT 1), 'Principles and standards that determine acceptable conduct in business', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is business ethics?' ORDER BY id DESC LIMIT 1), 'A method to increase sales', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is business ethics?' ORDER BY id DESC LIMIT 1), 'A strategy for marketing', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is business ethics?' ORDER BY id DESC LIMIT 1), 'A financial accounting technique', FALSE);
+
+-- Question 13
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the purpose of a business plan?' ORDER BY id DESC LIMIT 1), 'To outline business goals and the strategy to achieve them', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of a business plan?' ORDER BY id DESC LIMIT 1), 'To calculate taxes', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of a business plan?' ORDER BY id DESC LIMIT 1), 'To manage daily tasks', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of a business plan?' ORDER BY id DESC LIMIT 1), 'To recruit employees', FALSE);
+
+-- Question 14
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is decision-making process?' ORDER BY id DESC LIMIT 1), 'A series of steps to identify and evaluate options and make a choice', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is decision-making process?' ORDER BY id DESC LIMIT 1), 'A financial planning strategy', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is decision-making process?' ORDER BY id DESC LIMIT 1), 'A technique to manage employees', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is decision-making process?' ORDER BY id DESC LIMIT 1), 'A method to segment markets', FALSE);
+
+-- Question 15
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What are the key components of supply chain management?' ORDER BY id DESC LIMIT 1), 'Planning, sourcing, manufacturing, delivery, and returns', TRUE),
+((SELECT id FROM assessments_question WHERE name='What are the key components of supply chain management?' ORDER BY id DESC LIMIT 1), 'Planning, marketing, sales, and finance', FALSE),
+((SELECT id FROM assessments_question WHERE name='What are the key components of supply chain management?' ORDER BY id DESC LIMIT 1), 'Production, HR, marketing, and sales', FALSE),
+((SELECT id FROM assessments_question WHERE name='What are the key components of supply chain management?' ORDER BY id DESC LIMIT 1), 'Marketing, sales, and customer service', FALSE);
+
+-- Question 16
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is risk management?' ORDER BY id DESC LIMIT 1), 'The process of identifying, assessing, and controlling threats', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is risk management?' ORDER BY id DESC LIMIT 1), 'A method to increase sales', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is risk management?' ORDER BY id DESC LIMIT 1), 'A technique for managing employees', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is risk management?' ORDER BY id DESC LIMIT 1), 'A strategy for financial investment', FALSE);
+
+-- Question 17
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the role of innovation in business?' ORDER BY id DESC LIMIT 1), 'To create new products and services and improve existing ones', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the role of innovation in business?' ORDER BY id DESC LIMIT 1), 'To eliminate competition', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the role of innovation in business?' ORDER BY id DESC LIMIT 1), 'To reduce costs', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the role of innovation in business?' ORDER BY id DESC LIMIT 1), 'To manage HR functions', FALSE);
+
+-- Question 18
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What are the characteristics of a good leader?' ORDER BY id DESC LIMIT 1), 'Vision, integrity, inspiration, and effective communication', TRUE),
+((SELECT id FROM assessments_question WHERE name='What are the characteristics of a good leader?' ORDER BY id DESC LIMIT 1), 'Dominance, strictness, and autocracy', FALSE),
+((SELECT id FROM assessments_question WHERE name='What are the characteristics of a good leader?' ORDER BY id DESC LIMIT 1), 'Financial expertise and technical skills', FALSE),
+((SELECT id FROM assessments_question WHERE name='What are the characteristics of a good leader?' ORDER BY id DESC LIMIT 1), 'Marketing and sales skills', FALSE);
+
+-- Question 19
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the importance of customer relationship management (CRM)?' ORDER BY id DESC LIMIT 1), 'To manage company''s interactions with current and potential customers', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the importance of customer relationship management (CRM)?' ORDER BY id DESC LIMIT 1), 'To handle employee relations', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the importance of customer relationship management (CRM)?' ORDER BY id DESC LIMIT 1), 'To manage supply chain', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the importance of customer relationship management (CRM)?' ORDER BY id DESC LIMIT 1), 'To oversee financial transactions', FALSE);
+
+-- Question 20
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is project management?' ORDER BY id DESC LIMIT 1), 'The process of planning, organizing, and managing resources to achieve specific goals', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is project management?' ORDER BY id DESC LIMIT 1), 'A method to manage HR activities', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is project management?' ORDER BY id DESC LIMIT 1), 'A strategy for financial planning', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is project management?' ORDER BY id DESC LIMIT 1), 'A technique for marketing', FALSE);
+
+-- Exam Start
+INSERT INTO assessments_assessment (title, type, pass_mark, description, thumbnail, lesson_id, time_allowed) VALUES
+('JavaScript Exam', 'exam', 75, 'Comprehensive exam on JavaScript programming concepts and practices.', NULL, NULL, 60);
+
+-- Insert questions for the assessment
+INSERT INTO assessments_question (assessment_id, name, points) VALUES
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'What is JavaScript?', 60),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'What is a variable in JavaScript?', 60),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'How do you declare a variable in JavaScript?', 40),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'What are the data types in JavaScript?', 60),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'What is an array in JavaScript?', 60),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'How do you create a function in JavaScript?', 60),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'What is an object in JavaScript?', 80),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'How do you add an element to an array in JavaScript?', 40),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'What is the difference between let and var?', 20),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'How do you remove an element from an array in JavaScript?', 40),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'What is a promise in JavaScript?', 80),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'How do you handle exceptions in JavaScript?', 60),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'What is the purpose of the this keyword in JavaScript?', 40),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'What is a callback function?', 20),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'What is event bubbling?', 80),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'What is closure in JavaScript?', 60),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'How do you convert a string to a number in JavaScript?', 60),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'What is the difference between == and ===?', 80),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'What is JSON?', 80),
+((SELECT id FROM assessments_assessment WHERE title='JavaScript Exam' LIMIT 1), 'What is the DOM in JavaScript?', 60);
+
+-- Insert answers for each question
+
+-- Question 1
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is JavaScript?' ORDER BY id DESC LIMIT 1), 'A programming language for web development', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is JavaScript?' ORDER BY id DESC LIMIT 1), 'A type of database', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is JavaScript?' ORDER BY id DESC LIMIT 1), 'A stylesheet language', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is JavaScript?' ORDER BY id DESC LIMIT 1), 'A web browser', FALSE);
+
+-- Question 2
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is a variable in JavaScript?' ORDER BY id DESC LIMIT 1), 'A container for storing data values', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is a variable in JavaScript?' ORDER BY id DESC LIMIT 1), 'A type of function', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is a variable in JavaScript?' ORDER BY id DESC LIMIT 1), 'A kind of loop', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is a variable in JavaScript?' ORDER BY id DESC LIMIT 1), 'A property of an object', FALSE);
+
+-- Question 3
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='How do you declare a variable in JavaScript?' ORDER BY id DESC LIMIT 1), 'var variableName;', TRUE),
+((SELECT id FROM assessments_question WHERE name='How do you declare a variable in JavaScript?' ORDER BY id DESC LIMIT 1), 'variable variableName;', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you declare a variable in JavaScript?' ORDER BY id DESC LIMIT 1), 'declare variableName;', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you declare a variable in JavaScript?' ORDER BY id DESC LIMIT 1), 'def variableName;', FALSE);
+
+-- Question 4
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What are the data types in JavaScript?' ORDER BY id DESC LIMIT 1), 'Number, String, Boolean, Object, Undefined', TRUE),
+((SELECT id FROM assessments_question WHERE name='What are the data types in JavaScript?' ORDER BY id DESC LIMIT 1), 'Number, Character, String, Boolean, Object', FALSE),
+((SELECT id FROM assessments_question WHERE name='What are the data types in JavaScript?' ORDER BY id DESC LIMIT 1), 'Integer, String, Boolean, Object, Null', FALSE),
+((SELECT id FROM assessments_question WHERE name='What are the data types in JavaScript?' ORDER BY id DESC LIMIT 1), 'Float, String, Boolean, Object, Undefined', FALSE);
+
+-- Question 5
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is an array in JavaScript?' ORDER BY id DESC LIMIT 1), 'An ordered list of values', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is an array in JavaScript?' ORDER BY id DESC LIMIT 1), 'A type of function', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is an array in JavaScript?' ORDER BY id DESC LIMIT 1), 'A method to store key-value pairs', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is an array in JavaScript?' ORDER BY id DESC LIMIT 1), 'A type of loop', FALSE);
+
+-- Question 6
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='How do you create a function in JavaScript?' ORDER BY id DESC LIMIT 1), 'function myFunction() {}', TRUE),
+((SELECT id FROM assessments_question WHERE name='How do you create a function in JavaScript?' ORDER BY id DESC LIMIT 1), 'def myFunction() {}', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you create a function in JavaScript?' ORDER BY id DESC LIMIT 1), 'function: myFunction() {}', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you create a function in JavaScript?' ORDER BY id DESC LIMIT 1), 'func myFunction() {}', FALSE);
+
+-- Question 7
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is an object in JavaScript?' ORDER BY id DESC LIMIT 1), 'A collection of properties', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is an object in JavaScript?' ORDER BY id DESC LIMIT 1), 'A type of function', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is an object in JavaScript?' ORDER BY id DESC LIMIT 1), 'A type of array', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is an object in JavaScript?' ORDER BY id DESC LIMIT 1), 'A type of loop', FALSE);
+
+-- Question 8
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='How do you add an element to an array in JavaScript?' ORDER BY id DESC LIMIT 1), 'array.push(element)', TRUE),
+((SELECT id FROM assessments_question WHERE name='How do you add an element to an array in JavaScript?' ORDER BY id DESC LIMIT 1), 'array.add(element)', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you add an element to an array in JavaScript?' ORDER BY id DESC LIMIT 1), 'array.insert(element)', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you add an element to an array in JavaScript?' ORDER BY id DESC LIMIT 1), 'array.append(element)', FALSE);
+
+-- Question 9
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the difference between let and var?' ORDER BY id DESC LIMIT 1), 'let has block scope, var has function scope', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the difference between let and var?' ORDER BY id DESC LIMIT 1), 'let is for constants, var is for variables', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the difference between let and var?' ORDER BY id DESC LIMIT 1), 'let is for arrays, var is for objects', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the difference between let and var?' ORDER BY id DESC LIMIT 1), 'let is a newer version of var', FALSE);
+
+-- Question 10
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='How do you remove an element from an array in JavaScript?' ORDER BY id DESC LIMIT 1), 'array.splice(index, 1)', TRUE),
+((SELECT id FROM assessments_question WHERE name='How do you remove an element from an array in JavaScript?' ORDER BY id DESC LIMIT 1), 'array.delete(index)', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you remove an element from an array in JavaScript?' ORDER BY id DESC LIMIT 1), 'array.remove(index)', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you remove an element from an array in JavaScript?' ORDER BY id DESC LIMIT 1), 'array.clear(index)', FALSE);
+
+-- Question 11
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is a promise in JavaScript?' ORDER BY id DESC LIMIT 1), 'An object representing the eventual completion or failure of an asynchronous operation', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is a promise in JavaScript?' ORDER BY id DESC LIMIT 1), 'A method to store data', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is a promise in JavaScript?' ORDER BY id DESC LIMIT 1), 'A type of function', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is a promise in JavaScript?' ORDER BY id DESC LIMIT 1), 'A method to create loops', FALSE);
+
+-- Question 12
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='How do you handle exceptions in JavaScript?' ORDER BY id DESC LIMIT 1), 'try...catch', TRUE),
+((SELECT id FROM assessments_question WHERE name='How do you handle exceptions in JavaScript?' ORDER BY id DESC LIMIT 1), 'try...except', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you handle exceptions in JavaScript?' ORDER BY id DESC LIMIT 1), 'try...handle', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you handle exceptions in JavaScript?' ORDER BY id DESC LIMIT 1), 'try...rescue', FALSE);
+
+-- Question 13
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the purpose of the this keyword in JavaScript?' ORDER BY id DESC LIMIT 1), 'To refer to the current object', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of the this keyword in JavaScript?' ORDER BY id DESC LIMIT 1), 'To refer to the global object', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of the this keyword in JavaScript?' ORDER BY id DESC LIMIT 1), 'To refer to the previous object', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the purpose of the this keyword in JavaScript?' ORDER BY id DESC LIMIT 1), 'To refer to the function itself', FALSE);
+
+-- Question 14
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is a callback function?' ORDER BY id DESC LIMIT 1), 'A function passed into another function as an argument', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is a callback function?' ORDER BY id DESC LIMIT 1), 'A function that calls itself', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is a callback function?' ORDER BY id DESC LIMIT 1), 'A function that returns a value', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is a callback function?' ORDER BY id DESC LIMIT 1), 'A function that is called once', FALSE);
+
+-- Question 15
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is event bubbling?' ORDER BY id DESC LIMIT 1), 'When an event starts from the target element and propagates up to the root', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is event bubbling?' ORDER BY id DESC LIMIT 1), 'When an event starts from the root and propagates down to the target element', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is event bubbling?' ORDER BY id DESC LIMIT 1), 'When an event is prevented from propagating', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is event bubbling?' ORDER BY id DESC LIMIT 1), 'When an event is canceled', FALSE);
+
+-- Question 16
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is closure in JavaScript?' ORDER BY id DESC LIMIT 1), 'A function that retains access to its lexical scope even when invoked outside that scope', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is closure in JavaScript?' ORDER BY id DESC LIMIT 1), 'A function that returns another function', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is closure in JavaScript?' ORDER BY id DESC LIMIT 1), 'A function that calls itself', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is closure in JavaScript?' ORDER BY id DESC LIMIT 1), 'A function that does not return a value', FALSE);
+
+-- Question 17
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='How do you convert a string to a number in JavaScript?' ORDER BY id DESC LIMIT 1), 'Number(string)', TRUE),
+((SELECT id FROM assessments_question WHERE name='How do you convert a string to a number in JavaScript?' ORDER BY id DESC LIMIT 1), 'parseInt(string)', TRUE),
+((SELECT id FROM assessments_question WHERE name='How do you convert a string to a number in JavaScript?' ORDER BY id DESC LIMIT 1), 'int(string)', FALSE),
+((SELECT id FROM assessments_question WHERE name='How do you convert a string to a number in JavaScript?' ORDER BY id DESC LIMIT 1), 'toNumber(string)', FALSE);
+
+-- Question 18
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the difference between == and ===?' ORDER BY id DESC LIMIT 1), '== compares values, === compares values and types', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the difference between == and ===?' ORDER BY id DESC LIMIT 1), '== is for comparison, === is for assignment', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the difference between == and ===?' ORDER BY id DESC LIMIT 1), '== is for strings, === is for numbers', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the difference between == and ===?' ORDER BY id DESC LIMIT 1), '== is for arrays, === is for objects', FALSE);
+
+-- Question 19
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is JSON?' ORDER BY id DESC LIMIT 1), 'JavaScript Object Notation, a lightweight data-interchange format', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is JSON?' ORDER BY id DESC LIMIT 1), 'JavaScript Object Namespace', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is JSON?' ORDER BY id DESC LIMIT 1), 'JavaScript Operator Notation', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is JSON?' ORDER BY id DESC LIMIT 1), 'JavaScript Online Notation', FALSE);
+
+-- Question 20
+INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
+((SELECT id FROM assessments_question WHERE name='What is the DOM in JavaScript?' ORDER BY id DESC LIMIT 1), 'Document Object Model, a programming interface for HTML and XML documents', TRUE),
+((SELECT id FROM assessments_question WHERE name='What is the DOM in JavaScript?' ORDER BY id DESC LIMIT 1), 'Data Object Model', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the DOM in JavaScript?' ORDER BY id DESC LIMIT 1), 'Document Online Model', FALSE),
+((SELECT id FROM assessments_question WHERE name='What is the DOM in JavaScript?' ORDER BY id DESC LIMIT 1), 'Data Online Model', FALSE);
 
 COMMIT;
