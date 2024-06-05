@@ -28,8 +28,8 @@ class Assessment(models.Model):
             return {'score': -1, 'comment': 'Not Started'}
         res = res[0]
         if res.score < self.pass_mark:
-            return {'score': res.score, 'comment': 'Failed'}
-        return {'score': res.score, 'comment': 'Passed'}
+            return {'score': res.score, 'comment': 'Failed', 'time_taken': res.time_taken}
+        return {'score': res.score, 'comment': 'Passed', 'time_taken': res.time_taken}
 
     def completed(self, user):
         return self.completed_by.filter(id=user.id).exists()
@@ -63,6 +63,7 @@ class AssessmentResult(models.Model):
     assessment = models.ForeignKey(Assessment, on_delete=models.CASCADE, null=False, blank=False, related_name='results')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=False, blank=False, related_name='results')
     score = models.PositiveIntegerField('Score (%)')
+    time_taken = models.PositiveIntegerField(default=0)
 
     def clean(self):
         if self.assessment.type != 'exam':

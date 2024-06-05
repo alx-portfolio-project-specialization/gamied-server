@@ -187,7 +187,7 @@ INSERT INTO assessments_question (assessment_id, name, points) VALUES
 INSERT INTO assessments_answer (question_id, name, is_correct) VALUES
 ((SELECT id FROM assessments_question WHERE name='Which keyword is used to define a function in Python?' LIMIT 1), 'func', FALSE),
 ((SELECT id FROM assessments_question WHERE name='Which keyword is used to define a function in Python?' LIMIT 1), 'define', FALSE),
-((SELECT id FROM assessments_question WHERE name='Which keyword is used to define a function in Python?' LIMIT 1), 'function', TRUE),
+((SELECT id FROM assessments_question WHERE name='Which keyword is used to define a function in Python?' LIMIT 1), 'function', FALSE),
 ((SELECT id FROM assessments_question WHERE name='Which keyword is used to define a function in Python?' LIMIT 1), 'def', TRUE),
 
 ((SELECT id FROM assessments_question WHERE name='How do you call a function named "myFunction" in Python?' LIMIT 1), 'call myFunction()', FALSE),

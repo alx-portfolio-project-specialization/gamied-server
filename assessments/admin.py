@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.forms.models import inlineformset_factory
 
-from assessments.models import Assessment, Question, Answer, Penalty
+from assessments.models import Assessment, Question, Answer, Penalty, AssessmentResult
 
 QuestionFormSet = inlineformset_factory(
     Assessment,
@@ -65,3 +65,15 @@ class PenaltyAdmin(admin.ModelAdmin):
     #     # Disable the ability to delete existing penalties
     #     return False
 
+
+@admin.register(AssessmentResult)
+class AssessmentResultAdmin(admin.ModelAdmin):
+    list_display = ('user', 'assessment', 'score', 'time_taken')
+
+    def has_add_permission(self, request):
+        # Disable the ability to add new results
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        # Disable the ability to change existing results
+        return False

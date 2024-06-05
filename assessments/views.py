@@ -235,7 +235,8 @@ class SubmitAssessmentAPIView(APIView):
                 if is_exam:
                     total_points = assessment.total_points()
                     score = round((total_points - lost_points) / (total_points or 1) * 100)
-                    AssessmentResult.objects.update_or_create(defaults={'score': score}, user=user, assessment=assessment)
+                    time_taken = int(request.data.get('time_taken', assessment.time_allowed))
+                    AssessmentResult.objects.update_or_create(defaults={'score': score, 'time_taken': time_taken}, user=user, assessment=assessment)
                     passed = score >= assessment.pass_mark
                 if (is_exam and passed) or (not is_exam and not incorrect):  # They passed exam or got all the quiz right
                     assessment.completed_by.add(user)
